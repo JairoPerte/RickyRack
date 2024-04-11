@@ -4,5 +4,5 @@ module org.openjfx.Proyecto_Programacion {
 	requires javafx.graphics;
 	requires javafx.media;
 
-	exports org.openjfx.Proyecto_Programacion;
+	exports application;
 }

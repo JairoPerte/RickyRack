@@ -1,4 +1,4 @@
-package org.openjfx.Proyecto_Programacion;
+package application;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

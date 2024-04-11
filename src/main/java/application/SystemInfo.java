@@ -1,4 +1,4 @@
-package org.openjfx.Proyecto_Programacion;
+package application;
 
 public class SystemInfo {
 
