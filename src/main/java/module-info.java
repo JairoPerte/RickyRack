@@ -1,4 +1,8 @@
 module org.openjfx.Proyecto_Programacion {
-    requires javafx.controls;
-    exports org.openjfx.Proyecto_Programacion;
+	requires javafx.controls;
+	requires javafx.base;
+	requires javafx.graphics;
+	requires javafx.media;
+
+	exports org.openjfx.Proyecto_Programacion;
 }

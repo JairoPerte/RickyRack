@@ -10,11 +10,24 @@
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>13</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-media -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-media</artifactId>
+			<version>13</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-base -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-base</artifactId>
+			<version>13</version>
+		</dependency>
     </dependencies>
     <build>
         <plugins>
