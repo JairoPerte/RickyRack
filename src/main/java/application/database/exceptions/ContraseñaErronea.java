@@ -1,5 +1,5 @@
 package application.database.exceptions;
 
-public class Ejemplo {
+public class ContraseñaErronea {
 
 }
