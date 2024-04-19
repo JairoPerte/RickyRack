@@ -23,6 +23,12 @@
 			<artifactId>javafx-media</artifactId>
 			<version>22</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-graphics -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-graphics</artifactId>
+			<version>22</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-base -->
 		<dependency>
 			<groupId>org.openjfx</groupId>
@@ -68,7 +74,7 @@
 						<!-- Usage: mvn clean javafx:run -->
 						<id>default-cli</id>
 						<configuration>
-							<mainClass>org.openjfx.Proyecto_Programacion.App</mainClass>
+							<mainClass>application.App</mainClass>
 						</configuration>
 					</execution>
 				</executions>
