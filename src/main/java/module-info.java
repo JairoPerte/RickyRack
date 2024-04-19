@@ -5,6 +5,8 @@ module org.openjfx.Proyecto_Programacion {
 	requires javafx.media;
 	requires java.sql;
 	requires javafx.fxml;
+	requires org.apache.commons.io;
+	requires mysql.connector.j;
 
 	exports application;
 }
