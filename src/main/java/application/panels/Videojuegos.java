@@ -1,8 +1,7 @@
 package application.panels;
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +9,10 @@ import java.util.ArrayList;
 
 import application.database.model.ProductoDAO;
 import application.database.utils.UtilsBD;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 public class Videojuegos extends GridPane {
@@ -33,11 +35,22 @@ public class Videojuegos extends GridPane {
 				// Lo guardaremos en nuestro gridPane para cada videojuego
 				GridPane gP = new GridPane();
 
+				gP.setMaxSize(300, 300);
+				gP.setMinSize(300, 300);
+				gP.setPadding(new Insets(10));
+
 				// Buscamos el título
 				Label titulo = new Label(rs.getString("titulo"));
 
 				// Obtenemos la media
-				double media = ProductoDAO.calificacionMedia(con, rs.getInt("idproducto"));
+				double mediaCal = ProductoDAO.calificacionMedia(con, rs.getInt("idproducto"));
+
+				try {
+					Image imgEstrella = new Image(new FileInputStream(""));
+					ImageView imgVEstrella = new ImageView(imgEstrella);
+				} catch (FileNotFoundException e) {
+					// throws FaltaInterfaz
+				}
 
 				// Si es sinopsis larga la acortamos
 				try {
@@ -51,7 +64,7 @@ public class Videojuegos extends GridPane {
 				boolean tieneFoto = false;
 
 				// Buscamos imagen para ponerla
-				while (multimedias.next() && !tieneFoto) {
+				while (!tieneFoto && multimedias.next()) {
 					if (multimedias.getString("tipo").equals("I")) {
 						tieneFoto = true;
 					}
@@ -59,13 +72,14 @@ public class Videojuegos extends GridPane {
 
 				// Si no existe el ficchero/no se encuentra
 				try {
-					FileReader img = new FileReader(new File(multimedias.getString("ruta")));
+					Image imgProd = new Image(new FileInputStream(multimedias.getString("ruta")));
+					ImageView imgVProd = new ImageView(imgProd);
 				} catch (FileNotFoundException e) {
 					Label img = new Label("No hay imagen para este artículo");
 				}
 			}
 		} catch (SQLException e) {
-
+			// Throws ConexionFallida
 		}
 	}
 }

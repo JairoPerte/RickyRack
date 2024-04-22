@@ -1,5 +1,5 @@
 package application.database.exceptions;
 
-public class ContraseñaInoptima {
+public class ContrasenaInoptima {
 
 }
