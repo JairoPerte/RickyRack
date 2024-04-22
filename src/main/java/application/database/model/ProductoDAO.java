@@ -13,15 +13,16 @@ public class ProductoDAO {
 	 * @param  id
 	 * @return
 	 */
-	public ResultSet obtenerComentarios(Connection con, int id) {
-		PreparedStatement pstmt;
+	public static ResultSet obtenerComentarios(Connection con, int id) {
 		try {
-			pstmt = con.prepareStatement(
-					"SELECT nombre,imagen,likes,comentario JOIN para el nombre y numero de imagen WHERE id=id");
+			PreparedStatement pstmt = con.prepareStatement(
+					"SELECT usuario.nombre AS usuario, usuario.imagen AS imagen, usuario.nivel AS nivel, comentario.comentario AS comentario, comentario.likes FROM comentario JOIN usuario ON usuario.idusuario=comentario.usuario_idusuario WHERE producto_idproducto=?");
+
+			pstmt.setInt(0, id);
+
 			ResultSet rs = pstmt.executeQuery();
 			return rs;
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
@@ -32,21 +33,33 @@ public class ProductoDAO {
 	 * @param  id
 	 * @return
 	 */
-	public double calificacionMedia(Connection con, int id) {
-		double media = 0;
-		return media;
+	public static double calificacionMedia(Connection con, int id) {
+		try {
+			PreparedStatement pstmt = con.prepareStatement(
+					"SELECT TRUNCATE(1,AVG(calificacion)) AS media FROM calificacion WHERE producto_idproducto=?");
+
+			pstmt.setInt(0, id);
+
+			return pstmt.executeQuery().getDouble("media");
+		} catch (SQLException e) {
+			return -1;
+		}
 	}
 
-	public ResultSet obtenerProductos(Connection con, int categoria) {
+	/**
+	 * 
+	 * @param  con
+	 * @param  categoria
+	 * @return
+	 */
+	public static ResultSet obtenerProductos(Connection con, int categoria) {
 		try {
-			String query = "SELECT * FROM producto where categoria=?";
-			PreparedStatement pstmt = con.prepareStatement(query);
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM producto WHERE categoria=?");
 
 			pstmt.setInt(0, categoria);
 
 			return pstmt.executeQuery();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
