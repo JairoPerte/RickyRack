@@ -13,7 +13,7 @@ public class ProductoDAO {
 	 * @param  id
 	 * @return
 	 */
-	public ResultSet obtenerComentariosUsuario(Connection con, int id) {
+	public ResultSet obtenerComentarios(Connection con, int id) {
 		PreparedStatement pstmt;
 		try {
 			pstmt = con.prepareStatement(
@@ -35,5 +35,19 @@ public class ProductoDAO {
 	public double calificacionMedia(Connection con, int id) {
 		double media = 0;
 		return media;
+	}
+
+	public ResultSet obtenerProductos(Connection con, int categoria) {
+		try {
+			String query = "SELECT * FROM producto where categoria=?";
+			PreparedStatement pstmt = con.prepareStatement(query);
+
+			pstmt.setInt(0, categoria);
+
+			return pstmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

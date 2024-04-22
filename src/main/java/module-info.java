@@ -6,6 +6,7 @@ module org.openjfx.Proyecto_Programacion {
 	requires javafx.fxml;
 	requires org.apache.commons.io;
 	requires mysql.connector.j;
+	requires java.sql;
 
 	exports application;
 }
