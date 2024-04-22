@@ -70,7 +70,7 @@ public class ProductoDAO {
 	 * @param  id
 	 * @return
 	 */
-	public static ResultSet obtenerMedia(Connection con, int id) {
+	public static ResultSet obtenerMultiMedia(Connection con, int id) {
 		try {
 			PreparedStatement pstmt = con.prepareStatement(
 					"SELECT multimedia.ruta AS ruta, multimedia.tipo AS tipo FROM multimedia JOIN producto ON multimedia.producto_idproducto=producto.idproducto WHERE producto.idproducto=?");
