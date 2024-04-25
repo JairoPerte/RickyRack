@@ -35,8 +35,8 @@ public class Videojuegos extends GridPane {
 				// Lo guardaremos en nuestro gridPane para cada videojuego
 				GridPane gP = new GridPane();
 
-				gP.setMaxSize(300, 300);
-				gP.setMinSize(300, 300);
+				gP.setMaxSize(300, 150);
+				gP.setMinSize(300, 150);
 				gP.setPadding(new Insets(10));
 
 				// Buscamos el título
@@ -54,7 +54,7 @@ public class Videojuegos extends GridPane {
 
 				// Si es sinopsis larga la acortamos con (...)
 				try {
-					Label sinopsis = new Label(rs.getString("sinopsis").substring(0, 70) + "...");
+					Label sinopsis = new Label(rs.getString("sinopsis").substring(0, 150) + "...");
 				} catch (StringIndexOutOfBoundsException e) {
 					Label sinopsis = new Label(rs.getString("sinopsis"));
 				}
@@ -87,8 +87,8 @@ public class Videojuegos extends GridPane {
 				// Lo guardaremos en nuestro gridPane
 				GridPane gP = new GridPane();
 
-				gP.setMaxSize(300, 300);
-				gP.setMinSize(300, 300);
+				gP.setMaxSize(300, 150);
+				gP.setMinSize(300, 150);
 				gP.setPadding(new Insets(10));
 
 				try {
