@@ -53,11 +53,7 @@ public class Videojuegos extends GridPane {
 				}
 
 				// Si es sinopsis larga la acortamos con (...)
-				try {
-					Label sinopsis = new Label(rs.getString("sinopsis").substring(0, 150) + "...");
-				} catch (StringIndexOutOfBoundsException e) {
-					Label sinopsis = new Label(rs.getString("sinopsis"));
-				}
+				Label sinopsis = new Label(rs.getString("sinopsis"));
 
 				// Buscamos toda la multimedia relacionada con ese producto
 				ResultSet multimedias = ProductoDAO.obtenerMultiMedia(con, rs.getInt("idproducto"));
