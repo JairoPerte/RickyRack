@@ -63,7 +63,7 @@ public class Pruebas extends Application {
 		// Lo posicionamos arriba
 		pnlDistribucion.setTop(barraMenu);
 
-		// ZONA CENTRAL
+		// ZONA CENTRAL PESTAÑAS
 
 		// panel de pestañas
 		TabPane panelPestanas = new TabPane();
@@ -122,6 +122,9 @@ public class Pruebas extends Application {
 		GridPane.setMargin(gP5, new Insets(10, 10, 10, 10));
 		GridPane.setMargin(gP6, new Insets(10, 10, 10, 10));
 
+		// Esto es para la barra lateral lo de fit me he tirado un
+		// triple y al final ha funcionado (es pa que no se ralle
+		// con el texto)
 		ScrollPane scrollPane = new ScrollPane(gridTotal);
 		scrollPane.setFitToWidth(true);
 		scrollPane.setFitToHeight(true);
@@ -212,6 +215,8 @@ public class Pruebas extends Application {
 		// lo quitamos pero este me gusta
 		gP.setBorder(new Border(
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
+
+		// FALTA CONTROLAR ERRORES
 	}
 
 	public static void main(String[] args) {
