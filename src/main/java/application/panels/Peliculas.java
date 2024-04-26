@@ -1,8 +1,7 @@
 package application.panels;
 
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,12 +9,15 @@ import java.util.ArrayList;
 
 import application.database.model.ProductoDAO;
 import application.database.utils.UtilsBD;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 public class Peliculas extends GridPane {
 
-	private static final int PELICULA = 1;
+	private static final int PELICULA = 2;
 
 	public ArrayList<Integer> listaReferencia;
 
@@ -24,24 +26,35 @@ public class Peliculas extends GridPane {
 			Connection con = UtilsBD.conectarBD();
 			ResultSet rs = ProductoDAO.obtenerProductos(con, PELICULA);
 
-			// Por cada libro encontrado
+			// Por cada peloicula encontrado
 			while (rs.next()) {
 
-				// Lo guardamos en la lista de referencia
+				// Lo guardamos en la lista de Referencia
 				listaReferencia.add(rs.getInt("idproducto"));
 
-				// Lo guardaremos en nuestro gridPane para cada videojuego
+				// Lo guardaremos en nuestro gridPane para cada pelicula
 				GridPane gP = new GridPane();
+
+				gP.setMaxSize(300, 150);
+				gP.setMinSize(300, 150);
+				gP.setPadding(new Insets(10));
 
 				// Buscamos el título
 				Label titulo = new Label(rs.getString("titulo"));
 
 				// Obtenemos la media
-				double media = ProductoDAO.calificacionMedia(con, rs.getInt("idproducto"));
+				double mediaCalificacion = ProductoDAO.calificacionMedia(con, rs.getInt("idproducto"));
 
-				// Si es sinopsis larga la acortamos
 				try {
-					Label sinopsis = new Label(rs.getString("sinopsis").substring(0, 800) + "...");
+					Image estrella = new Image(new FileInputStream(".\\media\\img\\interfaz\\estrella-relleno.png"));
+					ImageView imgEstrella = new ImageView(estrella);
+				} catch (FileNotFoundException e) {
+					// throws FaltaInterfaz
+				}
+
+				// Si es sinopsis larga la acortamos con (...)
+				try {
+					Label sinopsis = new Label(rs.getString("sinopsis").substring(0, 150) + "...");
 				} catch (StringIndexOutOfBoundsException e) {
 					Label sinopsis = new Label(rs.getString("sinopsis"));
 				}
@@ -50,23 +63,46 @@ public class Peliculas extends GridPane {
 				ResultSet multimedias = ProductoDAO.obtenerMultiMedia(con, rs.getInt("idproducto"));
 				boolean tieneFoto = false;
 
-				// Buscamos la imagen
-				while (multimedias.next() && !tieneFoto) {
+				// Buscamos imagen para ponerla
+				while (!tieneFoto && multimedias.next()) {
 					if (multimedias.getString("tipo").equals("I")) {
 						tieneFoto = true;
 					}
 				}
 
-				// Si no existe el ficchero/no se encuentra
+				// Si no existe el ficchero/no se encuentra (no existe para
+				// ese artículo)
 				try {
-					FileReader img = new FileReader(new File(multimedias.getString("ruta")));
+					Image prod = new Image(new FileInputStream(multimedias.getString("ruta")));
+					ImageView imgProd = new ImageView(prod);
 				} catch (FileNotFoundException e) {
-					Label img = new Label("No hay imagen para este artículo");
+					Label imgProd = new Label("No hay imagen para este artículo");
 				}
 			}
-		} catch (SQLException e) {
 
+			// Aquí el codigo de añadir un nuevo "artículo" que cuando
+			// clickes sea para dejar al usuario añadir
+			if (userConectado) {
+
+				// Lo guardaremos en nuestro gridPane
+				GridPane gP = new GridPane();
+
+				gP.setMaxSize(300, 150);
+				gP.setMinSize(300, 150);
+				gP.setPadding(new Insets(10));
+
+				try {
+					Image botonAdd = new Image(new FileInputStream(".\\media\\img\\interfaz\\boton-add.png"));
+					ImageView imgBotonAdd = new ImageView(botonAdd);
+				} catch (FileNotFoundException e) {
+					// throws FaltaInterfaz
+				}
+
+				Label titulo = new Label("Haz click aquí para añadir un nuevo artículo...");
+
+			}
+		} catch (SQLException e) {
+			// Throws ConexionFallida
 		}
 	}
 }
-
