@@ -11,17 +11,18 @@ import application.database.model.ProductoDAO;
 import application.database.utils.UtilsBD;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
-public class Videojuegos extends GridPane {
+public class Productos extends ScrollPane {
 
 	private static final int VIDEOJUEGO = 2;
 
 	public ArrayList<Integer> listaReferencia;
 
-	public Videojuegos(boolean userConectado) {
+	public Productos(boolean userConectado, int categoria) {
 		try {
 			Connection con = UtilsBD.conectarBD();
 			ResultSet rs = ProductoDAO.obtenerProductos(con, VIDEOJUEGO);

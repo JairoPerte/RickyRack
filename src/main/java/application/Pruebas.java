@@ -45,17 +45,22 @@ public class Pruebas extends Application {
 		Menu mSesion = new Menu("Sesión");
 		Menu mAyuda = new Menu("Ayuda");
 
+		/*
+		 * NUEVO MENU SI EL USUARIO SE HA REGISTRADO/INICIADO SESION
+		 */
+
 		// Items menu
 		MenuItem iRegristro = new MenuItem("Registrarse...");
 		MenuItem iIniciar = new MenuItem("Iniciar Sesión...");
 
 		MenuItem iAcercaDe = new MenuItem("Acerca de RickyRack");
 		MenuItem iAutores = new MenuItem("Autores");
+		MenuItem iContacto = new MenuItem("Contacta con nosotros");
 		MenuItem iAyuda = new MenuItem("Ayuda");
 
 		// Añadimos los menu items
 		mSesion.getItems().addAll(iIniciar, iRegristro);
-		mAyuda.getItems().addAll(iAcercaDe, iAutores, iAyuda);
+		mAyuda.getItems().addAll(iAcercaDe, iContacto, iAutores, iAyuda);
 
 		// Añadimos los menu al menubar
 		barraMenu.getMenus().addAll(mSesion, mAyuda);
@@ -108,7 +113,8 @@ public class Pruebas extends Application {
 		gridTotal.setBorder(new Border(
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
 
-		// Les ponemos las posiciones
+		// Les ponemos las posiciones (no va a haber tantas, es que
+		// era para probar y me daba pereza)
 		GridPane.setConstraints(gP, 0, 0);
 		GridPane.setConstraints(gP2, 0, 1);
 		GridPane.setConstraints(gP3, 0, 2);
