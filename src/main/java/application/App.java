@@ -3,11 +3,11 @@ package application;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import application.panels.PaneDistribucion;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
@@ -15,11 +15,15 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
+	private boolean userConectado = false;
+
 	@Override
 	public void start(Stage stage) {
 		try {
-			Label label = new Label("Nada de momento");
-			Scene scene = new Scene(new StackPane(label), 640, 480);
+
+			BorderPane application = new PaneDistribucion(userConectado, stage);
+
+			Scene scene = new Scene(application, 900, 700);
 			stage.setTitle("RickyRack");
 			stage.getIcons().add(new Image(new FileInputStream(".\\media\\img\\interfaz\\RickyRack-logo-fondo.png")));
 			stage.setScene(scene);
@@ -30,7 +34,7 @@ public class App extends Application {
 	}
 
 	public static void main(String[] args) {
-		launch();
+		launch(args);
 	}
 
 }

@@ -18,7 +18,7 @@ public class ProductoDAO {
 			PreparedStatement pstmt = con.prepareStatement(
 					"SELECT usuario.nombre AS usuario, usuario.imagen AS imagen, usuario.nivel AS nivel, comentario.comentario AS comentario, comentario.likes FROM comentario JOIN usuario ON usuario.idusuario=comentario.usuario_idusuario WHERE producto_idproducto=?");
 
-			pstmt.setInt(0, id);
+			pstmt.setInt(1, id);
 
 			ResultSet rs = pstmt.executeQuery();
 			return rs;
@@ -36,11 +36,15 @@ public class ProductoDAO {
 	public static double calificacionMedia(Connection con, int id) {
 		try {
 			PreparedStatement pstmt = con.prepareStatement(
-					"SELECT TRUNCATE(1,AVG(calificacion)) AS media FROM calificacion WHERE producto_idproducto=?");
+					"SELECT TRUNCATE(AVG(calificacion),1) AS media FROM calificacion WHERE producto_idproducto=?");
 
-			pstmt.setInt(0, id);
+			pstmt.setInt(1, id);
 
-			return pstmt.executeQuery().getDouble("media");
+			ResultSet rs = pstmt.executeQuery();
+
+			rs.next();
+
+			return rs.getDouble("media");
 		} catch (SQLException e) {
 			return -1;
 		}
@@ -56,7 +60,7 @@ public class ProductoDAO {
 		try {
 			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM producto WHERE categoria=?");
 
-			pstmt.setInt(0, categoria);
+			pstmt.setInt(1, categoria);
 
 			return pstmt.executeQuery();
 		} catch (SQLException e) {
@@ -75,7 +79,7 @@ public class ProductoDAO {
 			PreparedStatement pstmt = con.prepareStatement(
 					"SELECT multimedia.ruta AS ruta, multimedia.tipo AS tipo FROM multimedia JOIN producto ON multimedia.producto_idproducto=producto.idproducto WHERE producto.idproducto=?");
 
-			pstmt.setInt(0, id);
+			pstmt.setInt(1, id);
 
 			return pstmt.executeQuery();
 		} catch (SQLException e) {
