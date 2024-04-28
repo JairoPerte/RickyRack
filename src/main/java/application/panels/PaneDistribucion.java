@@ -39,14 +39,14 @@ public class PaneDistribucion extends BorderPane {
 			MenuItem iCerrar = new MenuItem("Cerrar Sesión...");
 			mSesion.getItems().addAll(iCerrar);
 
-			MenuItem iCambiarImg = new Menu("Cambiar Imagen");
-			MenuItem iCambiarPassword = new Menu("Cambiar Contraseña");
-			MenuItem iEliminar = new Menu("Eliminar Cuenta");
+			MenuItem iCambiarImg = new MenuItem("Cambiar Imagen");
+			MenuItem iCambiarPassword = new MenuItem("Cambiar Contraseña");
+			MenuItem iEliminar = new MenuItem("Eliminar Cuenta");
 
 			mConfiguracion.getItems().addAll(iCambiarImg, iCambiarPassword, iEliminar);
 		}
 
-		MenuItem iSalir = new Menu("Salir de la Aplicacion");
+		MenuItem iSalir = new MenuItem("Salir de la Aplicacion");
 		mConfiguracion.getItems().addAll(iSalir);
 
 		MenuItem iAcercaDe = new MenuItem("Acerca de RickyRack");
