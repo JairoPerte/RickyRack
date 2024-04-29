@@ -34,7 +34,7 @@ public class Productos extends ScrollPane {
 			int indice = 0;
 
 			while (rs.next()) {
-				GridPane prod = producto(con, rs);
+				GridPane prod = cargarProducto(con, rs);
 
 				prodsCats.getChildren().add(prod);
 
@@ -104,10 +104,18 @@ public class Productos extends ScrollPane {
 		}
 	}
 
-	public static GridPane producto(Connection con, ResultSet rs) {
+	/**
+	 * 
+	 * Carga el producto de un resultset especificado
+	 * 
+	 * @param  con Conexión a la BD
+	 * @param  rs  El resultset de un producto a cargar
+	 * @return
+	 */
+	public static GridPane cargarProducto(Connection con, ResultSet rs) {
 		try {
 			GridPane prodCat = new GridPane();
-			GridPane cuerpo = cuerpoProducto(con, rs);
+			GridPane cuerpo = cargarCuerpoProducto(con, rs);
 
 			// Buscamos toda la multimedia relacionada con ese producto
 			ResultSet multimedias = ProductoDAO.obtenerMultiMedia(con, rs.getInt("idproducto"));
@@ -187,14 +195,15 @@ public class Productos extends ScrollPane {
 	}
 
 	/**
-	 * Carga el cuerpo del Producto
+	 * Carga el cuerpo del Producto para introducirlo en el
+	 * producto espeficicado
 	 * 
 	 * @param  con Conexión de BD
 	 * @param  rs  El resultset de un producto a cargar el
 	 *             producto
 	 * @return
 	 */
-	public static GridPane cuerpoProducto(Connection con, ResultSet rs) {
+	public static GridPane cargarCuerpoProducto(Connection con, ResultSet rs) {
 		try {
 			// El GridPane para enviar
 			GridPane cuerpoProd = new GridPane();
