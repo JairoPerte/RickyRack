@@ -24,7 +24,16 @@ import javafx.scene.text.TextAlignment;
 
 public class Productos extends ScrollPane {
 
-	public Productos(boolean userConectado, int categoria) {
+	private static final int DESCONECTADO = -1;
+
+	/**
+	 * Carga todos los productos en un ScrollPane de una
+	 * determinada categoría
+	 * 
+	 * @param userConectado user conectado/no conectado
+	 * @param categoria     la categoria a cargar
+	 */
+	public Productos(int userConectado, int categoria) {
 		try {
 			Connection con = UtilsBD.conectarBD();
 			ResultSet rs = ProductoDAO.obtenerProductos(con, categoria);
@@ -43,7 +52,7 @@ public class Productos extends ScrollPane {
 			}
 
 			// Añadir un articulo solo lo podrá ver si esta conectado
-			if (userConectado) {
+			if (userConectado == DESCONECTADO) {
 				GridPane addProd = new GridPane();
 
 				// Propiedades:

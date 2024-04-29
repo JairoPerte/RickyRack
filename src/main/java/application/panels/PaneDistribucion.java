@@ -22,7 +22,9 @@ public class PaneDistribucion extends BorderPane {
 	private static final int PELICULAS = 1;
 	private static final int VIDEOJUEGOS = 2;
 
-	public PaneDistribucion(boolean userConectado, Stage stage) {
+	private static final int DESCONECTADO = -1;
+
+	public PaneDistribucion(int userConectado, Stage stage) {
 
 		// ZONA SUPERIOR MENU
 
@@ -35,7 +37,7 @@ public class PaneDistribucion extends BorderPane {
 		Menu mConfiguracion = new Menu("Configuración");
 
 		// Items menu
-		if (!userConectado) {
+		if (userConectado == DESCONECTADO) {
 			MenuItem iRegristro = new MenuItem("Registrarse...");
 			MenuItem iIniciar = new MenuItem("Iniciar Sesión...");
 			mSesion.getItems().addAll(iIniciar, iRegristro);
@@ -98,7 +100,7 @@ public class PaneDistribucion extends BorderPane {
 		// Lo posicionamos en el centro
 		this.setCenter(panelPestanas);
 
-		//Eventos
+		// Eventos
 
 		iContacto.setOnAction(event -> {
 			abrirFormularioContacto();
