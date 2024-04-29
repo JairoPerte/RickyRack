@@ -1,7 +1,9 @@
 package application.panels;
 
+import application.ventana.VentanaContacto;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -9,6 +11,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class PaneDistribucion extends BorderPane {
@@ -94,6 +98,12 @@ public class PaneDistribucion extends BorderPane {
 		// Lo posicionamos en el centro
 		this.setCenter(panelPestanas);
 
+		//Eventos
+
+		iContacto.setOnAction(event -> {
+			abrirFormularioContacto();
+		});
+
 		// Cuando pulsamos en la opcion de menu salir cerramos la
 		// app
 		iSalir.setOnAction(new EventHandler<ActionEvent>() {
@@ -102,6 +112,22 @@ public class PaneDistribucion extends BorderPane {
 				stage.close();
 			}
 		});
+	}
+
+	private void abrirFormularioContacto() {
+
+		Stage formularioStage = new Stage();
+		VentanaContacto testInforma = new VentanaContacto();
+		Scene testScene = testInforma.createScene();
+
+		// formulario de contacto
+		VBox vbox = new VBox();
+		vbox.getChildren().addAll(testScene.getRoot());
+		formularioStage.initModality(Modality.WINDOW_MODAL);
+
+		Scene scene = new Scene(vbox);
+		formularioStage.setScene(scene);
+		formularioStage.showAndWait();
 	}
 
 }

@@ -15,7 +15,7 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
-	private boolean userConectado = false;
+	private boolean userConectado = true;
 
 	@Override
 	public void start(Stage stage) {
