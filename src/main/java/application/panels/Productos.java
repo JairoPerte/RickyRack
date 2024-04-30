@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import application.database.model.ProductoDAO;
-import application.database.utils.UtilsBD;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -33,9 +32,8 @@ public class Productos extends ScrollPane {
 	 * @param userConectado user conectado/no conectado
 	 * @param categoria     la categoria a cargar
 	 */
-	public Productos(int userConectado, int categoria) {
+	public Productos(int userConectado, int categoria, Connection con) {
 		try {
-			Connection con = UtilsBD.conectarBD();
 			ResultSet rs = ProductoDAO.obtenerProductos(con, categoria);
 
 			GridPane prodsCats = new GridPane();
@@ -218,7 +216,21 @@ public class Productos extends ScrollPane {
 
 			// Obtenemos los datos
 			Label titulo = new Label(rs.getString("titulo"));
-			Label mediaCal = new Label(String.valueOf(ProductoDAO.calificacionMedia(con, rs.getInt("idproducto"))));
+			double calificacionMedia = ProductoDAO.calificacionMedia(con, rs.getInt("idproducto"));
+			Label mediaCal = new Label(String.valueOf(calificacionMedia));
+
+			if (calificacionMedia > 4.5) {
+				mediaCal.setTextFill(Color.DARKGREEN);
+			} else if (calificacionMedia > 3.5) {
+				mediaCal.setTextFill(Color.GREEN);
+			} else if (calificacionMedia > 2.5) {
+				mediaCal.setTextFill(Color.ORANGE);
+			} else if (calificacionMedia > 1.5) {
+				mediaCal.setTextFill(Color.ORANGERED);
+			} else {
+				mediaCal.setTextFill(Color.RED);
+			}
+
 			Label sinopsis = new Label(rs.getString("sinopsis"));
 			sinopsis.setWrapText(true); // Para que el texto sea responsivo
 

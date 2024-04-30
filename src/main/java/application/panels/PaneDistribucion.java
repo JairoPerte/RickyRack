@@ -1,6 +1,10 @@
 package application.panels;
 
+import java.sql.Connection;
+
+import application.ventana.VentanaCargando;
 import application.ventana.VentanaContacto;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -24,7 +28,9 @@ public class PaneDistribucion extends BorderPane {
 
 	private static final int DESCONECTADO = -1;
 
-	public PaneDistribucion(int userConectado, Stage stage) {
+	public PaneDistribucion(int userConectado, Stage stage, Connection con) {
+		// Mientras que va cargando
+		VentanaCargando carga = new VentanaCargando();
 
 		// ZONA SUPERIOR MENU
 
@@ -88,9 +94,9 @@ public class PaneDistribucion extends BorderPane {
 		tabVideojuegos.setClosable(false);
 
 		// Creamos todos los scrollPane que necesitamos
-		ScrollPane libros = new Productos(userConectado, LIBROS);
-		ScrollPane peliculas = new Productos(userConectado, PELICULAS);
-		ScrollPane videojuegos = new Productos(userConectado, VIDEOJUEGOS);
+		ScrollPane libros = new Productos(userConectado, LIBROS, con);
+		ScrollPane peliculas = new Productos(userConectado, PELICULAS, con);
+		ScrollPane videojuegos = new Productos(userConectado, VIDEOJUEGOS, con);
 
 		// Lo asignamos a las pestañas
 		tabLibros.setContent(libros);
@@ -114,6 +120,9 @@ public class PaneDistribucion extends BorderPane {
 				stage.close();
 			}
 		});
+
+		// Cuando ya ha cargado
+		Platform.runLater(() -> carga.close());
 	}
 
 	private void abrirFormularioContacto() {

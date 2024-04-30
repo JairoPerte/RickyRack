@@ -21,6 +21,12 @@ public class CookieWriter {
 
 	public static void crearCookies(int id, String hash) {
 		try {
+			// Si no exite el directo lo creamos
+			File directorioCookies = new File(".\\Cookies");
+			if (!directorioCookies.exists()) {
+				directorioCookies.mkdir();
+			}
+
 			// Crear un nuevo documento PDF
 			PDDocument document = new PDDocument();
 			// Crear una nueva página
@@ -55,14 +61,13 @@ public class CookieWriter {
 			document.close();
 		} catch (IOException e) {
 			new File(".\\Cookies\\Cookies_User" + id + ".pdf").delete();
-			crearCookies(id, hash);
 		}
 	}
 
 	public static ArrayList<Integer> comprobarCookies(Connection con) {
 
 		// Buscamos en el directorios
-		File directorioCookies = new File(".\\cookies");
+		File directorioCookies = new File(".\\Cookies");
 
 		// ID de todas las sesiones inciadas
 		ArrayList<Integer> idReferencias = new ArrayList<Integer>();

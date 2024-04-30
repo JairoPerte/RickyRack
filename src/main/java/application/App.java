@@ -2,8 +2,11 @@ package application;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.sql.Connection;
 
+import application.database.utils.UtilsBD;
 import application.panels.PaneDistribucion;
+import application.ventana.VentanaInicioSesion;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -16,13 +19,18 @@ import javafx.stage.Stage;
 public class App extends Application {
 
 	// Si el usuario está desconectaco (-1)
-	private static int userConectado = -1;
+	public static int userLog = -1;
 
 	@Override
 	public void start(Stage stage) {
 		try {
+			// Conectamos a la Base de Datos
+			Connection con = UtilsBD.conectarBD();
 
-			BorderPane application = new PaneDistribucion(userConectado, stage);
+			// Buscamos las cookies de sesión(si hay alguna)
+			new VentanaInicioSesion(con);
+
+			BorderPane application = new PaneDistribucion(userLog, stage, con);
 
 			Scene scene = new Scene(application, 900, 700);
 			stage.setTitle("RickyRack");

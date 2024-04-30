@@ -21,9 +21,7 @@ public class UtilsBD {
 
 			// Capturamos cualquier excepción
 		} catch (Exception e) {
-			// Cuando salta el fallo mostramos un mensaje diciendo la
-			// linea
-			e.printStackTrace();
+			// throws ConexionFallida
 			return null;
 		}
 
