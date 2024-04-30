@@ -52,7 +52,7 @@ public class Productos extends ScrollPane {
 			}
 
 			// Añadir un articulo solo lo podrá ver si esta conectado
-			if (userConectado == DESCONECTADO) {
+			if (userConectado != DESCONECTADO) {
 				GridPane addProd = new GridPane();
 
 				// Propiedades:
@@ -65,8 +65,8 @@ public class Productos extends ScrollPane {
 						new BorderWidths(2))));
 
 				try {
-					Image botonAdd = new Image(new FileInputStream(".\\media\\img\\interfaz\\boton-add.png"));
-					ImageView imgBotonAdd = new ImageView(botonAdd);
+					ImageView imgBotonAdd = new ImageView(
+							new Image(new FileInputStream(".\\media\\img\\interfaz\\boton-add.png")));
 
 					// Forzamos la imagen
 					imgBotonAdd.setFitHeight(100);
@@ -142,8 +142,7 @@ public class Productos extends ScrollPane {
 			// ese artículo)
 			try {
 				// La añadimos
-				Image prod = new Image(new FileInputStream(multimedias.getString("ruta")));
-				ImageView imgProd = new ImageView(prod);
+				ImageView imgProd = new ImageView(new Image(new FileInputStream(multimedias.getString("ruta"))));
 
 				// Forzamos la imagen
 				imgProd.setFitHeight(100);
@@ -226,8 +225,8 @@ public class Productos extends ScrollPane {
 			// Si no encontramos la estrella el Usuario tiene un
 			// problema d interfaz
 			try {
-				Image estrella = new Image(new FileInputStream(".\\media\\img\\interfaz\\estrella-relleno.png"));
-				ImageView imgEstrella = new ImageView(estrella);
+				ImageView imgEstrella = new ImageView(
+						new Image(new FileInputStream(".\\media\\img\\interfaz\\estrella-relleno.png")));
 
 				imgEstrella.setFitHeight(20);
 				imgEstrella.setFitWidth(20);

@@ -7,6 +7,7 @@ module org.openjfx.Proyecto_Programacion {
 	requires org.apache.commons.io;
 	requires mysql.connector.j;
 	requires java.sql;
+	requires org.apache.pdfbox;
 
 	exports application;
 }

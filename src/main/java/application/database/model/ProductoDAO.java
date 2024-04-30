@@ -46,7 +46,7 @@ public class ProductoDAO {
 
 			return rs.getDouble("media");
 		} catch (SQLException e) {
-			return -1;
+			return 0;
 		}
 	}
 
