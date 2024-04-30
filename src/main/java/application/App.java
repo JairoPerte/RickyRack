@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 public class App extends Application {
 
 	// Si el usuario está desconectaco (-1)
-	private int userConectado = -1;
+	private static int userConectado = -1;
 
 	@Override
 	public void start(Stage stage) {

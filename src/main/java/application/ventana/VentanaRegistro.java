@@ -1,5 +1,7 @@
 package application.ventana;
 
-public class VentanaRegistro {
+import javafx.stage.Stage;
+
+public class VentanaRegistro extends Stage {
 
 }

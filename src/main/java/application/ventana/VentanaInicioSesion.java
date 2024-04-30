@@ -1,5 +1,7 @@
 package application.ventana;
 
-public class VentanaInicioSesion {
+import javafx.stage.Stage;
+
+public class VentanaInicioSesion extends Stage {
 
 }

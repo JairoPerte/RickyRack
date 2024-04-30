@@ -20,7 +20,6 @@ public class Hash {
 
 	public static void crearHash(Connection con, int id) {
 		try {
-			// obtener del paneregistro los datos
 			PreparedStatement pstmt = con.prepareStatement("UPDATE usuario SET hash=? WHERE idusuario=?");
 			String hash = generarHash();
 			pstmt.setString(1, hash);
