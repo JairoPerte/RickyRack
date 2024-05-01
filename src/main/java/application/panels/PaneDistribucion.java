@@ -2,11 +2,11 @@ package application.panels;
 
 import java.sql.Connection;
 
+import application.App;
 import application.ventana.VentanaCargando;
 import application.ventana.VentanaContacto;
+import application.ventana.VentanaInicioSesion;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -50,6 +50,20 @@ public class PaneDistribucion extends BorderPane {
 		} else {
 			MenuItem iCerrar = new MenuItem("Cerrar Sesión...");
 			mSesion.getItems().addAll(iCerrar);
+
+			iCerrar.setOnAction(event -> {
+				// Desconectado por defecto
+				App.userLog = DESCONECTADO;
+				// Lo cerramos
+				stage.close();
+				// Mostramos la ventan de inicio de sesión de cookies
+				// guardadas (por si quiere iniciar sesión con otra cuenta o
+				// no iniciar sesión)
+				new VentanaInicioSesion(con);
+				// Creamos la nueva escena con los valores nuevos
+				stage.setScene(new Scene(new PaneDistribucion(App.userLog, stage, con), 900, 700));
+				stage.show();
+			});
 
 			MenuItem iCambiarImg = new MenuItem("Cambiar Imagen");
 			MenuItem iCambiarPassword = new MenuItem("Cambiar Contraseña");
@@ -107,18 +121,14 @@ public class PaneDistribucion extends BorderPane {
 		this.setCenter(panelPestanas);
 
 		// Eventos
-
 		iContacto.setOnAction(event -> {
 			abrirFormularioContacto();
 		});
 
 		// Cuando pulsamos en la opcion de menu salir cerramos la
 		// app
-		iSalir.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				stage.close();
-			}
+		iSalir.setOnAction(event -> {
+			stage.close();
 		});
 
 		// Cuando ya ha cargado

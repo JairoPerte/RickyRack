@@ -11,6 +11,7 @@ import application.App;
 import application.cookies.CookieWriter;
 import application.database.model.UsuarioDAO;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -51,8 +52,8 @@ public class VentanaInicioSesion extends Stage {
 			return;
 		}
 
-		for (int i = 0; i < idsIniciados.size(); i++) {
-			try {
+		try {
+			for (int i = 0; i < idsIniciados.size(); i++) {
 				GridPane usuario = new GridPane();
 				int id = idsIniciados.get(i);
 
@@ -127,6 +128,14 @@ public class VentanaInicioSesion extends Stage {
 					this.close();
 				});
 
+				usuario.setOnMouseEntered(event -> {
+					this.getScene().setCursor(Cursor.HAND);
+				});
+
+				usuario.setOnMouseExited(event -> {
+					this.getScene().setCursor(Cursor.DEFAULT);
+				});
+
 				// La añadimos
 				usuario.getChildren().addAll(nombre, nivel);
 
@@ -140,18 +149,19 @@ public class VentanaInicioSesion extends Stage {
 						new BorderWidths(2), new Insets(2))));
 
 				usuariosIniciados.getChildren().add(usuario);
-			} catch (SQLException e) {
-			} catch (FileNotFoundException e) {
-				// throws FaltaInterfaz
 			}
+
+			this.getIcons().add(new Image(new FileInputStream(".\\media\\img\\interfaz\\default-user-icon.png")));
+			Scene escena = new Scene(paneScroll, 220, 300);
+			this.setTitle("Entrar");
+			this.initModality(Modality.WINDOW_MODAL);
+			this.setScene(escena);
+
+			// Mostramos
+			this.showAndWait();
+		} catch (SQLException e) {
+		} catch (FileNotFoundException e) {
+			// throws FaltaInterfaz
 		}
-
-		Scene escena = new Scene(paneScroll, 220, 300);
-		this.setTitle("Iniciar");
-		this.initModality(Modality.WINDOW_MODAL);
-		this.setScene(escena);
-
-		// Mostramos
-		this.showAndWait();
 	}
 }
