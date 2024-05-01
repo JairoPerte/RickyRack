@@ -60,7 +60,7 @@ public class PaneDistribucion extends BorderPane {
 				// guardadas (por si quiere iniciar sesión con otra cuenta o
 				// no iniciar sesión)
 				new VentanaInicioSesion(con);
-				// Creamos la nueva escena con los valores nuevos
+				// Para que cargen de nuevo los cambios
 				stage.setScene(new Scene(new PaneDistribucion(App.userLog, stage, con), 900, 700));
 				stage.show();
 			});
@@ -131,7 +131,7 @@ public class PaneDistribucion extends BorderPane {
 			stage.close();
 		});
 
-		// Cuando ya ha cargado
+		// Cuando ya ha cargado es cuando la pestaña termina
 		Platform.runLater(() -> carga.close());
 	}
 
