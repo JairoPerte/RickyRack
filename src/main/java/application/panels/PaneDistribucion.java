@@ -1,10 +1,14 @@
 package application.panels;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import application.App;
+import application.database.model.UsuarioDAO;
 import application.ventana.VentanaCargando;
 import application.ventana.VentanaContacto;
+import application.ventana.VentanaIniciarSesion;
 import application.ventana.VentanaInicioSesion;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -28,7 +32,7 @@ public class PaneDistribucion extends BorderPane {
 
 	private static final int DESCONECTADO = -1;
 
-	public PaneDistribucion(int userConectado, Stage stage, Connection con) {
+	public PaneDistribucion(int idusuario, Stage stage, Connection con) {
 		// Mientras que va cargando
 		VentanaCargando carga = new VentanaCargando();
 
@@ -41,13 +45,26 @@ public class PaneDistribucion extends BorderPane {
 		Menu mSesion = new Menu("Sesión");
 		Menu mAyuda = new Menu("Ayuda");
 		Menu mConfiguracion = new Menu("Configuración");
+		Menu mUsuario = new Menu();
 
 		// Items menu
-		if (userConectado == DESCONECTADO) {
+		if (idusuario == DESCONECTADO) {
 			MenuItem iRegristro = new MenuItem("Registrarse...");
 			MenuItem iIniciar = new MenuItem("Iniciar Sesión...");
 			mSesion.getItems().addAll(iIniciar, iRegristro);
+			mUsuario = new Menu("(desconectado)");
+
+			iIniciar.setOnAction(event -> {
+				new VentanaIniciarSesion(stage, con);
+			});
 		} else {
+			try {
+				ResultSet rs = UsuarioDAO.getUsuario(con, idusuario);
+				rs.next();
+				mUsuario = new Menu(rs.getString("nombre"));
+			} catch (SQLException e) {
+				mUsuario = new Menu("problemas");
+			}
 			MenuItem iCerrar = new MenuItem("Cerrar Sesión...");
 			mSesion.getItems().addAll(iCerrar);
 
@@ -84,7 +101,7 @@ public class PaneDistribucion extends BorderPane {
 		mAyuda.getItems().addAll(iAcercaDe, iContacto, iAutores, iAyuda);
 
 		// Añadimos los menu al menubar
-		barraMenu.getMenus().addAll(mSesion, mAyuda, mConfiguracion);
+		barraMenu.getMenus().addAll(mSesion, mAyuda, mConfiguracion, mUsuario);
 
 		// Lo posicionamos arriba
 		this.setTop(barraMenu);
@@ -108,9 +125,9 @@ public class PaneDistribucion extends BorderPane {
 		tabVideojuegos.setClosable(false);
 
 		// Creamos todos los scrollPane que necesitamos
-		ScrollPane libros = new Productos(userConectado, LIBROS, con);
-		ScrollPane peliculas = new Productos(userConectado, PELICULAS, con);
-		ScrollPane videojuegos = new Productos(userConectado, VIDEOJUEGOS, con);
+		ScrollPane libros = new Productos(idusuario, LIBROS, con);
+		ScrollPane peliculas = new Productos(idusuario, PELICULAS, con);
+		ScrollPane videojuegos = new Productos(idusuario, VIDEOJUEGOS, con);
 
 		// Lo asignamos a las pestañas
 		tabLibros.setContent(libros);

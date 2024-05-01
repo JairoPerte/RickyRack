@@ -9,7 +9,8 @@ public class Hash {
 
 	public static boolean comprobarHash(Connection con, int id, String hash) {
 		try {
-			PreparedStatement pstmt = con.prepareStatement("SELECT hash FROM usuario WHERE idusuario=? and hash=?");
+			PreparedStatement pstmt = con
+					.prepareStatement("SELECT idusuario FROM usuario WHERE idusuario=? and hash=?");
 			pstmt.setInt(1, id);
 			pstmt.setString(2, hash);
 			return pstmt.executeQuery().next();

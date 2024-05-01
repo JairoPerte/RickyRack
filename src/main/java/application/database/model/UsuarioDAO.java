@@ -80,8 +80,20 @@ public class UsuarioDAO {
 	public static boolean comprobarContrasena(Connection con, int id, String password) {
 		try {
 			PreparedStatement pstmt = con
-					.prepareStatement("SELECT password FROM usuario WHERE idusuario=? and password=?");
+					.prepareStatement("SELECT idusuario FROM usuario WHERE idusuario=? and password=?");
 			pstmt.setInt(1, id);
+			pstmt.setString(2, password);
+			return pstmt.executeQuery().next();
+		} catch (SQLException sqle) {
+			return false;
+		}
+	}
+
+	public static boolean comprobarContrasena(Connection con, String nombre, String password) {
+		try {
+			PreparedStatement pstmt = con
+					.prepareStatement("SELECT idusuario FROM usuario WHERE nombre=? and password=?");
+			pstmt.setString(1, nombre);
 			pstmt.setString(2, password);
 			return pstmt.executeQuery().next();
 		} catch (SQLException sqle) {
