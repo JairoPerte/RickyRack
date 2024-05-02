@@ -1,7 +1,11 @@
 package application.ventana;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -10,10 +14,13 @@ public class VentanaCargando extends Stage {
 		try {
 			Scene escena = new Scene(new Label(), 400, 200);
 			this.setTitle("Espere un momento...");
+			this.getIcons().add(new Image(new FileInputStream(".\\media\\img\\interfaz\\cargar.gif")));
 			this.initModality(Modality.NONE);
 			this.setScene(escena);
 			this.show();
 		} catch (NullPointerException e) {
+
+		} catch (FileNotFoundException e) {
 
 		}
 	}

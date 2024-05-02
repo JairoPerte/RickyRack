@@ -55,6 +55,8 @@ public class VentanaInicioSesion extends Stage {
 		try {
 			for (int i = 0; i < idsIniciados.size(); i++) {
 				GridPane usuario = new GridPane();
+				usuario.setId("usuario");
+
 				int id = idsIniciados.get(i);
 
 				ResultSet rs = UsuarioDAO.getUsuario(con, id);
@@ -62,7 +64,8 @@ public class VentanaInicioSesion extends Stage {
 
 				Label nombre = new Label(rs.getString("nombre"));
 				Label nivel = new Label("Nivel " + rs.getInt("nivel"));
-				nivel.setTextFill(Color.DARKBLUE);
+				usuario.setId("nombre");
+				nivel.setId("nivel");
 
 				// Ponemos la imagen
 				switch (rs.getInt("imagen")) {
@@ -130,10 +133,16 @@ public class VentanaInicioSesion extends Stage {
 
 				usuario.setOnMouseEntered(event -> {
 					this.getScene().setCursor(Cursor.HAND);
+					usuario.setId("usuario-hover");
+					nombre.setId("nombre-hover");
+					nivel.setId("nivel-hover");
 				});
 
 				usuario.setOnMouseExited(event -> {
 					this.getScene().setCursor(Cursor.DEFAULT);
+					usuario.setId("usuario");
+					nombre.setId("nombre");
+					nivel.setId("nivel");
 				});
 
 				// La añadimos
@@ -153,6 +162,7 @@ public class VentanaInicioSesion extends Stage {
 
 			this.getIcons().add(new Image(new FileInputStream(".\\media\\img\\interfaz\\default-user-icon.png")));
 			Scene escena = new Scene(paneScroll, 220, 300);
+			escena.getStylesheets().add(getClass().getResource("/estilos/iniciosesion.css").toExternalForm());
 			this.setTitle("Entrar");
 			this.initModality(Modality.WINDOW_MODAL);
 			this.setScene(escena);

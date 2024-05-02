@@ -1,0 +1,27 @@
+#usuario{
+	-fx-background-color: #ffffff;
+}
+
+#usuario-hover{
+	-fx-background-color: #000000;
+}
+
+#nivel{
+	-fx-text-fill: #00008B;
+	-fx-font-weight: bold;
+}
+
+#nivel-hover{
+	-fx-text-fill: #6495ED;
+	-fx-font-weight: bold;
+}
+
+#nombre{
+	-fx-text-fill: #000000;
+	-fx-font-weight: bold;
+}
+
+#nombre-hover{
+	-fx-text-fill: #ffffff;
+	-fx-font-weight: bold;
+}

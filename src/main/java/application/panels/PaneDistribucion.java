@@ -32,7 +32,7 @@ public class PaneDistribucion extends BorderPane {
 
 	private static final int DESCONECTADO = -1;
 
-	public PaneDistribucion(int idusuario, Stage stage, Connection con) {
+	public PaneDistribucion(int userLog, Stage stage, Connection con) {
 		// Mientras que va cargando
 		VentanaCargando carga = new VentanaCargando();
 
@@ -48,7 +48,7 @@ public class PaneDistribucion extends BorderPane {
 		Menu mUsuario = new Menu();
 
 		// Items menu
-		if (idusuario == DESCONECTADO) {
+		if (userLog == DESCONECTADO) {
 			MenuItem iRegristro = new MenuItem("Registrarse...");
 			MenuItem iIniciar = new MenuItem("Iniciar Sesión...");
 			mSesion.getItems().addAll(iIniciar, iRegristro);
@@ -59,7 +59,7 @@ public class PaneDistribucion extends BorderPane {
 			});
 		} else {
 			try {
-				ResultSet rs = UsuarioDAO.getUsuario(con, idusuario);
+				ResultSet rs = UsuarioDAO.getUsuario(con, userLog);
 				rs.next();
 				mUsuario = new Menu(rs.getString("nombre"));
 			} catch (SQLException e) {
@@ -125,9 +125,9 @@ public class PaneDistribucion extends BorderPane {
 		tabVideojuegos.setClosable(false);
 
 		// Creamos todos los scrollPane que necesitamos
-		ScrollPane libros = new Productos(idusuario, LIBROS, con);
-		ScrollPane peliculas = new Productos(idusuario, PELICULAS, con);
-		ScrollPane videojuegos = new Productos(idusuario, VIDEOJUEGOS, con);
+		ScrollPane libros = new Productos(userLog, LIBROS, con);
+		ScrollPane peliculas = new Productos(userLog, PELICULAS, con);
+		ScrollPane videojuegos = new Productos(userLog, VIDEOJUEGOS, con);
 
 		// Lo asignamos a las pestañas
 		tabLibros.setContent(libros);

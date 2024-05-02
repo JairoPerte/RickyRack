@@ -1,0 +1,34 @@
+#iniciar{
+	-fx-text-fill: white;
+	-fx-background-color: #ff0000;
+}
+
+#iniciar-click{
+	-fx-text-fill: white;
+	-fx-background-color:#006400;
+}
+
+#iniciar:hover {
+	-fx-background-color: #00ff00;
+}
+
+#usuario{
+	-fx-text-fill: black;
+	-fx-background-color: #ffffff;
+}
+
+#usuario-click{
+	-fx-text-fill: white;
+	-fx-background-color: #000000;
+	-fx-font-weight: bold;
+}
+
+#contrasena{
+	-fx-text-fill: black;
+	-fx-background-color: #ffffff;
+}
+
+#contrasena-click{
+	-fx-text-fill: white;
+	-fx-background-color: #000000;
+}

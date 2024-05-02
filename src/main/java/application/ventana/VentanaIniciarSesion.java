@@ -38,24 +38,42 @@ public class VentanaIniciarSesion extends Stage {
 			Button iniciar = new Button("Iniciar Sesión");
 			inicioSesion.getChildren().addAll(lblUsuario, usuario, lblContrasena, contrasena, guardarInicioSesion,
 					iniciar);
-
-			iniciar.setStyle("-fx-background-color: #ff0000; -fx-text-fill: white;");
+			iniciar.setId("iniciar");
 
 			iniciar.setOnMouseEntered(event -> {
-				iniciar.setStyle("-fx-background-color: #00ff00; -fx-text-fill: white;");
 				this.getScene().setCursor(Cursor.HAND);
 			});
 
 			iniciar.setOnMouseExited(event -> {
-				iniciar.setStyle("-fx-background-color: #ff0000; -fx-text-fill: white;");
 				this.getScene().setCursor(Cursor.DEFAULT);
 			});
 
+			usuario.setId("usuario-click");
+
+			usuario.setOnMouseClicked(event -> {
+				usuario.setId("usuario-click");
+				contrasena.setId("contrasena");
+			});
+
+			guardarInicioSesion.setOnMouseClicked(event -> {
+				contrasena.setId("contrasena");
+				usuario.setId("usuario");
+			});
+
+			contrasena.setOnMouseClicked(event -> {
+				contrasena.setId("contrasena-click");
+				usuario.setId("usuario");
+			});
+
 			iniciar.setOnMouseClicked(event -> {
+				contrasena.setId("contrasena");
+				usuario.setId("usuario");
+				iniciar.setId("iniciar-click");
 				String nombre = usuario.getText();
 				String password = contrasena.getText();
 				if (usuario.getText().length() == 0 || password.length() == 0) {
 					// throws CampoObligatorios
+					iniciar.setId("iniciar");
 				} else {
 					try {
 						ResultSet rs = UsuarioDAO.getUsuario(con, nombre);
@@ -76,11 +94,14 @@ public class VentanaIniciarSesion extends Stage {
 									stage.close();
 								}
 								// throws ContrasenaErronea(numFallos)
+								iniciar.setId("iniciar");
 							}
 						} else {
 							// throws UsuarioNoExistene
+							iniciar.setId("iniciar");
 						}
 					} catch (SQLException e) {
+						iniciar.setId("iniciar");
 					}
 				}
 			});
@@ -100,7 +121,8 @@ public class VentanaIniciarSesion extends Stage {
 			GridPane.setMargin(iniciar, new Insets(5, 10, 5, 10));
 
 			this.getIcons().add(new Image(new FileInputStream(".\\media\\img\\interfaz\\default-user-icon.png")));
-			Scene escena = new Scene(inicioSesion, 330, 140);
+			Scene escena = new Scene(inicioSesion, 340, 140);
+			escena.getStylesheets().add(getClass().getResource("/estilos/iniciarsesion.css").toExternalForm());
 			this.setTitle("Iniciar Sesión");
 			this.initOwner(stage);
 			this.initModality(Modality.WINDOW_MODAL);

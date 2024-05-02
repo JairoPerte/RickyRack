@@ -29,10 +29,10 @@ public class Productos extends ScrollPane {
 	 * Carga todos los productos en un ScrollPane de una
 	 * determinada categoría
 	 * 
-	 * @param userConectado user conectado/no conectado
+	 * @param userLog user conectado/no conectado
 	 * @param categoria     la categoria a cargar
 	 */
-	public Productos(int userConectado, int categoria, Connection con) {
+	public Productos(int userLog, int categoria, Connection con) {
 		try {
 			ResultSet rs = ProductoDAO.obtenerProductos(con, categoria);
 
@@ -50,7 +50,7 @@ public class Productos extends ScrollPane {
 			}
 
 			// Añadir un articulo solo lo podrá ver si esta conectado
-			if (userConectado != DESCONECTADO) {
+			if (userLog != DESCONECTADO) {
 				GridPane addProd = new GridPane();
 
 				// Propiedades:
