@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import application.App;
 import application.database.model.UsuarioDAO;
 import application.ventana.VentanaCargando;
-import application.ventana.VentanaContacto;
 import application.ventana.VentanaIniciarSesion;
 import application.ventana.VentanaInicioSesion;
 import javafx.application.Platform;
@@ -19,8 +18,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class PaneDistribucion extends BorderPane {
@@ -142,7 +139,7 @@ public class PaneDistribucion extends BorderPane {
 
 		// Eventos
 		iContacto.setOnAction(event -> {
-			abrirFormularioContacto();
+			// new VentanaContacto();
 		});
 
 		// Cuando pulsamos en la opcion de menu salir cerramos la
@@ -153,22 +150,6 @@ public class PaneDistribucion extends BorderPane {
 
 		// Cuando ya ha cargado es cuando la pestaña termina
 		Platform.runLater(() -> carga.close());
-	}
-
-	private void abrirFormularioContacto() {
-
-		Stage formularioStage = new Stage();
-		VentanaContacto testInforma = new VentanaContacto();
-		Scene testScene = testInforma.createScene();
-
-		// formulario de contacto
-		VBox vbox = new VBox();
-		vbox.getChildren().addAll(testScene.getRoot());
-		formularioStage.initModality(Modality.WINDOW_MODAL);
-
-		Scene scene = new Scene(vbox);
-		formularioStage.setScene(scene);
-		formularioStage.showAndWait();
 	}
 
 }

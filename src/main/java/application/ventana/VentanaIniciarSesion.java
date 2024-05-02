@@ -90,7 +90,7 @@ public class VentanaIniciarSesion extends Stage {
 								stage.show();
 							} else {
 								this.numFallos++;
-								if (numFallos == 3) {
+								if (numFallos > 3) {
 									stage.close();
 								}
 								// throws ContrasenaErronea(numFallos)
