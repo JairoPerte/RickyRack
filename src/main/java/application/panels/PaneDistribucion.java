@@ -63,7 +63,6 @@ public class PaneDistribucion extends BorderPane {
 				rs.next();
 				mUsuario = new Menu(rs.getString("nombre"));
 			} catch (SQLException e) {
-				mUsuario = new Menu("problemas");
 			}
 			MenuItem iCerrar = new MenuItem("Cerrar Sesión...");
 			mSesion.getItems().addAll(iCerrar);
@@ -78,7 +77,9 @@ public class PaneDistribucion extends BorderPane {
 				// no iniciar sesión)
 				new VentanaInicioSesion(con);
 				// Para que cargen de nuevo los cambios
-				stage.setScene(new Scene(new PaneDistribucion(App.userLog, stage, con), 900, 700));
+				Scene escenaNueva = new Scene(new PaneDistribucion(App.userLog, stage, con), 900, 700);
+				escenaNueva.getStylesheets().add(getClass().getResource("/estilos/application.css").toExternalForm());
+				stage.setScene(escenaNueva);
 				stage.show();
 			});
 
@@ -88,6 +89,8 @@ public class PaneDistribucion extends BorderPane {
 
 			mConfiguracion.getItems().addAll(iCambiarImg, iCambiarPassword, iEliminar);
 		}
+
+		mUsuario.setId("menuUser");
 
 		MenuItem iSalir = new MenuItem("Salir de la Aplicacion");
 		mConfiguracion.getItems().addAll(iSalir);

@@ -33,6 +33,7 @@ public class App extends Application {
 			BorderPane application = new PaneDistribucion(userLog, stage, con);
 
 			Scene scene = new Scene(application, 900, 700);
+			scene.getStylesheets().add(getClass().getResource("/estilos/application.css").toExternalForm());
 			stage.setTitle("RickyRack");
 			stage.getIcons().add(new Image(new FileInputStream(".\\media\\img\\interfaz\\RickyRack-logo-fondo.png")));
 			stage.setScene(scene);

@@ -64,7 +64,7 @@ public class VentanaInicioSesion extends Stage {
 
 				Label nombre = new Label(rs.getString("nombre"));
 				Label nivel = new Label("Nivel " + rs.getInt("nivel"));
-				usuario.setId("nombre");
+				nombre.setId("nombre");
 				nivel.setId("nivel");
 
 				// Ponemos la imagen

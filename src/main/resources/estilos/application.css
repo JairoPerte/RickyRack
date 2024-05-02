@@ -1,0 +1,13 @@
+/*********PaneDistribucion*********/
+
+/*MenuBar*/
+#menuUser{
+	-fx-background-color: #34a6be;
+	-fx-font-weight: bold;
+}
+
+#menuUser:hover{
+	-fx-font-style: italic;
+}
+
+/*TabPane*/
