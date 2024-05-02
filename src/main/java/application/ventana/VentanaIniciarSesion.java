@@ -11,6 +11,7 @@ import application.cookies.Hash;
 import application.database.model.UsuarioDAO;
 import application.panels.PaneDistribucion;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -37,6 +38,18 @@ public class VentanaIniciarSesion extends Stage {
 			Button iniciar = new Button("Iniciar Sesión");
 			inicioSesion.getChildren().addAll(lblUsuario, usuario, lblContrasena, contrasena, guardarInicioSesion,
 					iniciar);
+
+			iniciar.setStyle("-fx-background-color: #ff0000; -fx-text-fill: white;");
+
+			iniciar.setOnMouseEntered(event -> {
+				iniciar.setStyle("-fx-background-color: #00ff00; -fx-text-fill: white;");
+				this.getScene().setCursor(Cursor.HAND);
+			});
+
+			iniciar.setOnMouseExited(event -> {
+				iniciar.setStyle("-fx-background-color: #ff0000; -fx-text-fill: white;");
+				this.getScene().setCursor(Cursor.DEFAULT);
+			});
 
 			iniciar.setOnMouseClicked(event -> {
 				String nombre = usuario.getText();

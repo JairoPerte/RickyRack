@@ -35,6 +35,7 @@ public class App extends Application {
 			Scene scene = new Scene(application, 900, 700);
 			stage.setTitle("RickyRack");
 			stage.getIcons().add(new Image(new FileInputStream(".\\media\\img\\interfaz\\RickyRack-logo-fondo.png")));
+			scene.getStylesheets().add(getClass().getResource("/estilos/NewFile.css").toExternalForm());
 			stage.setScene(scene);
 			stage.show();
 		} catch (FileNotFoundException e) {
