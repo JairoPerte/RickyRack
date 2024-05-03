@@ -86,7 +86,10 @@ public class VentanaIniciarSesion extends Stage {
 								App.userLog = id;
 								this.close();
 								stage.close();
-								stage.setScene(new Scene(new PaneDistribucion(App.userLog, stage, con), 900, 700));
+								Scene scene = new Scene(new PaneDistribucion(App.userLog, stage, con), 900, 700);
+								scene.getStylesheets()
+										.add(getClass().getResource("/estilos/application.css").toExternalForm());
+								stage.setScene(scene);
 								stage.show();
 							} else {
 								this.numFallos++;

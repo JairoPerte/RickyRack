@@ -7,8 +7,10 @@ import java.sql.SQLException;
 import application.App;
 import application.database.model.UsuarioDAO;
 import application.ventana.VentanaCargando;
+import application.ventana.VentanaContacto;
 import application.ventana.VentanaIniciarSesion;
 import application.ventana.VentanaInicioSesion;
+import application.ventana.VentanaRegistro;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -46,13 +48,16 @@ public class PaneDistribucion extends BorderPane {
 
 		// Items menu
 		if (userLog == DESCONECTADO) {
-			MenuItem iRegristro = new MenuItem("Registrarse...");
+			MenuItem iRegistro = new MenuItem("Registrarse...");
 			MenuItem iIniciar = new MenuItem("Iniciar Sesión...");
-			mSesion.getItems().addAll(iIniciar, iRegristro);
+			mSesion.getItems().addAll(iIniciar, iRegistro);
 			mUsuario = new Menu("(desconectado)");
 
 			iIniciar.setOnAction(event -> {
 				new VentanaIniciarSesion(stage, con);
+			});
+			iRegistro.setOnAction(event -> {
+				new VentanaRegistro(stage, con);
 			});
 		} else {
 			try {
@@ -139,7 +144,7 @@ public class PaneDistribucion extends BorderPane {
 
 		// Eventos
 		iContacto.setOnAction(event -> {
-			// new VentanaContacto();
+			new VentanaContacto(stage, con);
 		});
 
 		// Cuando pulsamos en la opcion de menu salir cerramos la

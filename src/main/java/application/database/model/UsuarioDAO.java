@@ -116,6 +116,52 @@ public class UsuarioDAO {
 		}
 	}
 
+	public static boolean amuentarXP(Connection con, int id, int aumentoXP) {
+		try {
+			ResultSet rs = getUsuario(con, id);
+			rs.next();
+			int exp = rs.getInt("experiencia") + aumentoXP;
+			int nivel = rs.getInt("nivel");
+			// Si es nivel 5 no puede subir más
+			if (nivel != 5) {
+				if (exp > 500) {
+					nivel++;
+					PreparedStatement pstmt = con
+							.prepareStatement("UPDATE usuario SET experiencia=0 WHERE idusuario=?");
+					pstmt.setInt(1, id);
+
+					pstmt.executeUpdate();
+					return subirNivel(con, id, nivel);
+				} else {
+					PreparedStatement pstmt = con
+							.prepareStatement("UPDATE usuario SET experiencia=? WHERE idusuario=?");
+					pstmt.setInt(1, exp);
+					pstmt.setInt(2, id);
+
+					pstmt.executeUpdate();
+					return true;
+				}
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			return false;
+		}
+	}
+
+	public static boolean subirNivel(Connection con, int id, int nivel) {
+		try {
+			PreparedStatement pstmt = con.prepareStatement("UPDATE usuario SET nivel=? WHERE idusuario=?");
+			pstmt.setInt(1, nivel);
+			pstmt.setInt(2, id);
+
+			pstmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			return false;
+		}
+	}
+
 	public static void cambiarImagen(Connection con, int id, int img) {
 		try {
 			PreparedStatement pstmt = con.prepareStatement("UPDATE usuario SET imagen=? WHERE idusuario=?");

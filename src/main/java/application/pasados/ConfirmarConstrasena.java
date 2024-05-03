@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class ConfirmarConstrasena extends Stage {
 
-	private static int numFallos = 0;
+	private int numFallos = 0;
 
 	// Ventana Introduzca la contraseña por tema de seguridad:
 	// textArea
@@ -22,7 +22,10 @@ public class ConfirmarConstrasena extends Stage {
 	// if(contraseña.getText().equals(confirmar.getText()){cambiarContraseñas}
 	// else throws Contrasenas no coincidentes
 
-	public ConfirmarConstrasena(Connection con, Stage stage, int userlog) {
+	private static final int CambiarContrasena = 1;
+	private static final int EliminarCuenta = 2;
+
+	public ConfirmarConstrasena(Connection con, Stage stage, int userlog, int motivo) {
 		// espacio entre párrafos
 		VBox vbox = new VBox(10);
 		// Creamos los campos
@@ -38,8 +41,12 @@ public class ConfirmarConstrasena extends Stage {
 		btnConfirmar.setOnAction(event -> {
 			if (pfContrasena.getText().equals(pfConfirma.getText())) {
 				if (UsuarioDAO.comprobarContrasena(con, userlog, pfContrasena.getText())) {
-					// nueva Ventana (new VentanaCambiarContraseña)
 					this.close();
+					if (motivo == CambiarContrasena) {
+						// new VentanaCambiarContrasena(con,stage,userLog)
+					} else if (motivo == EliminarCuenta) {
+						// new VentanaEliminarCuenta(con,stage,userLog)
+					}
 				} else {
 					// throws ContrasenaErronea
 					numFallos++;

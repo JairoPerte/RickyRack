@@ -1,0 +1,25 @@
+#nombre-img{
+	-fx-font-style: italic;
+	-fx-font-weight: bold;
+	-fx-text-fill: #b0b0b0;
+}
+
+#adjuntar{
+	-fx-text-fill: #ffffff;
+	-fx-background-color: #0000ff;
+}
+
+#adjuntar:hover{
+	-fx-font-weight: bold;
+	-fx-font-style: italic;
+}
+
+#enviar{
+	-fx-text-fill: white;
+	-fx-background-color: #ff0000;
+	-fx-font-weight: bold;
+}
+
+#enviar:hover{
+	-fx-background-color: #00ff00;
+}

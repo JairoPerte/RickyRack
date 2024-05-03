@@ -1,0 +1,10 @@
+#pane-blanco{
+	-fx-background-color: #ffffff;
+}
+
+#pane-drag{
+	-fx-background-color: #CFCFFF;
+	-fx-border-color: #0000FF;
+    -fx-border-width: 4px;
+    -fx-border-radius: none;
+}

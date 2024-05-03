@@ -1,0 +1,55 @@
+.imagen{
+    -fx-border-color: #808080;
+    -fx-border-width: 2px;
+}
+
+.imagen:hover{
+    -fx-border-color: #000000;
+}
+
+
+
+#imagen-selec{
+	-fx-border-color: #00cd00 !important;
+    -fx-border-width: 2px;
+}
+
+#registrarse{
+	-fx-text-fill: white;
+	-fx-background-color: #ff0000;
+}
+
+#registrarse:hover{
+	-fx-background-color: #00ff00;
+}
+
+#usuario{
+	-fx-text-fill: black;
+	-fx-background-color: #ffffff;
+}
+
+#usuario-click{
+	-fx-text-fill: white;
+	-fx-background-color: #000000;
+	-fx-font-weight: bold;
+}
+
+#contrasena{
+	-fx-text-fill: black;
+	-fx-background-color: #ffffff;
+}
+
+#contrasena-click{
+	-fx-text-fill: white;
+	-fx-background-color: #000000;
+}
+
+#confirmarcon{
+	-fx-text-fill: black;
+	-fx-background-color: #ffffff;
+}
+
+#confirmarcon-click{
+	-fx-text-fill: white;
+	-fx-background-color: #000000;
+}
