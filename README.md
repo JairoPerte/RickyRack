@@ -6,10 +6,9 @@ La librería que hemos escogido para utilizar en nuestro trabajo es: 'Spring Boo
 ---
 DESCRIPCIÓN DEL PROYECTO
 -
-Nuestro proyecto consisten en
-
+Nuestro proyecto consisten en una red social donde te puedes crear una cuenta e ir subiendo de nivel, en esta red social puedes calificar muchas cosas como libros, peliculas y videojuegos
 
 ---
 ANTES DE EMPEZAR
 -
-Deberías
+Deberías descargarte la base de datos para que funcione la aplicación, la BD está adjuntada en la tarea del classroom
