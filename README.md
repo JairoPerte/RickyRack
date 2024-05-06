@@ -1,5 +1,5 @@
 ----
-Trabajo Reaizado por Jairo Pertegal Carrasco, Rubén Hidalgo García y Mónica Marroquín Ortiz, este trabajo se ha realizado para el proyectoFX de 1ºDAW 2024/2025
+Trabajo Realizado por Jairo Pertegal Carrasco, Rubén Hidalgo García y Mónica Marroquín Ortiz, este trabajo se ha realizado para el proyectoFX de 1ºDAW 2024/2025
 -
 La librería que hemos escogido para utilizar en nuestro trabajo es: 'Apache Commons IO': página web del repositorio 'https://mvnrepository.com/artifact/commons-io/commons-io'
 
