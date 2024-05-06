@@ -126,7 +126,7 @@ public class VentanaContacto extends Stage {
 		this.show();
 	}
 
-	public void adjuntarArchivos(Stage stage) {
+	private void adjuntarArchivos(Stage stage) {
 		Stage stackPaneStage = new Stage();
 
 		StackPane stackPane = new StackPane();
@@ -188,7 +188,7 @@ public class VentanaContacto extends Stage {
 		stackPaneStage.showAndWait();
 	}
 
-	public void mostrarConfirmacion(Stage stage, Connection con) {
+	private void mostrarConfirmacion(Stage stage, Connection con) {
 		Alert infoAlert = new Alert(Alert.AlertType.CONFIRMATION);
 
 		infoAlert.setTitle("Confirmación");
