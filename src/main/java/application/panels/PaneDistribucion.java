@@ -105,7 +105,7 @@ public class PaneDistribucion extends BorderPane {
 			}
 			MenuItem iCerrar = new MenuItem("Cerrar Sesión...");
 			MenuItem iEliminarSesion = new MenuItem("Eliminar Sesión...");
-			mSesion.getItems().addAll(iCerrar);
+			mSesion.getItems().addAll(iCerrar, iEliminarSesion);
 
 			iCerrar.setOnAction(event -> {
 				// Desconectado por defecto

@@ -9,8 +9,8 @@ public class ContrasenasNoCoincidentes extends Alert {
 		super(alertType);
 		this.setTitle("Contraseñas no coinciden");
 		this.setHeaderText("Comprueba que las contraseñas coincidan");
-		this.show();
 		this.initOwner(stage);
+		this.show();
 	}
 
 }

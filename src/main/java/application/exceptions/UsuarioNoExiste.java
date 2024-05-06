@@ -10,8 +10,8 @@ public class UsuarioNoExiste extends Alert {
 		this.setTitle("Usuario No Existente");
 		this.setHeaderText("Dicho usuario no existe");
 		this.setContentText("Pruebe que no halla escrito mal el nombre del usuario");
-		this.show();
 		this.initOwner(stage);
+		this.show();
 	}
 
 }

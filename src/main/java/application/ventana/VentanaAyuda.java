@@ -11,7 +11,7 @@ public class VentanaAyuda extends Stage {
 		Label contacta = new Label("Para más ayuda dirigete a nuestra páigna web");
 		contacta.setAlignment(Pos.CENTER);
 		this.setTitle("Ayuda");
-		this.setScene(new Scene(contacta, 50, 10));
+		this.setScene(new Scene(contacta, 100, 80));
 		this.show();
 	}
 

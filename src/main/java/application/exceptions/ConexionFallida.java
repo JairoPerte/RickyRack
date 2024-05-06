@@ -10,8 +10,8 @@ public class ConexionFallida extends Alert {
 		this.setTitle("Error al conectar la base de datos");
 		this.setHeaderText("Conexión Fallida a la base de datos");
 		this.setContentText("No es problema tuyo sino nuestro :(");
-		this.showAndWait();
 		this.initOwner(stage);
+		this.showAndWait();
 		stage.close();
 	}
 

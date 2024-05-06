@@ -10,8 +10,8 @@ public class CampoObligatorios extends Alert {
 		this.setTitle("Campos Obligatorios");
 		this.setHeaderText("Falta algún campo por rellenar");
 		this.setContentText("Compruebe que tiene todos los campos rellenos");
-		this.show();
 		this.initOwner(stage);
+		this.show();
 	}
 
 }
