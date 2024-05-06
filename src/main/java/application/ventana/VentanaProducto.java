@@ -39,7 +39,6 @@ public class VentanaProducto extends Stage {
 	private static final int DESCONECTADO = -1;
 
 	private int estrellasSel;
-	private int likeSel;
 	private static boolean primerComent = false;
 
 	public VentanaProducto(Connection con, int userLog, int idProducto) {
@@ -353,9 +352,6 @@ public class VentanaProducto extends Stage {
 				// ID del comentario
 				int idcomentario = comentarios.getInt("idComentario");
 
-				// Obtenemos su like
-				likeSel = ProductoDAO.usuarioComentarioLike(con, userLog, idcomentario);
-
 				GridPane gPComentario = new GridPane();
 				gPComentario.setPrefWidth(560);
 
@@ -380,6 +376,10 @@ public class VentanaProducto extends Stage {
 					VBox vboxCorazonR = new VBox();
 					VBox vboxCorazonA = new VBox();
 
+					corazones.getChildren().addAll(vboxCorazonR, vboxCorazonA);
+					// Obtenemos su like
+					int likeSel = ProductoDAO.usuarioComentarioLike(con, userLog, idcomentario);
+
 					if (likeSel == -1) {
 						ImageView corazonR = new ImageView(
 								new Image(new FileInputStream(".\\media\\img\\interfaz\\corazon.png")));
@@ -392,21 +392,19 @@ public class VentanaProducto extends Stage {
 						vboxCorazonR.getChildren().add(corazonR);
 						vboxCorazonA.getChildren().add(corazonA);
 					} else {
-						comprobarLikesUser(vboxCorazonR, vboxCorazonA);
+						comprobarLikesUser(vboxCorazonR, vboxCorazonA, likeSel);
 					}
-
-					corazones.getChildren().addAll(vboxCorazonR, vboxCorazonA);
 
 					vboxCorazonA.setOnMouseClicked(event -> {
 						try {
 							if (userLog != DESCONECTADO) {
-								if (likeSel != 1) {
-									if (likeSel == -1) {
+								int likeSelec = ProductoDAO.usuarioComentarioLike(con, userLog, idcomentario);
+								if (likeSelec != 1) {
+									if (likeSelec == -1) {
 										ProductoDAO.insertarLike(con, userLog, idcomentario, 1);
 									} else {
 										ProductoDAO.actualizarLike(con, userLog, idcomentario, 1);
 									}
-									likeSel = 1;
 									ImageView corazonR = (ImageView) vboxCorazonR.getChildren().get(0);
 									corazonR.setImage(
 											new Image(new FileInputStream(".\\media\\img\\interfaz\\corazon.png")));
@@ -417,7 +415,7 @@ public class VentanaProducto extends Stage {
 											new FileInputStream(".\\media\\img\\interfaz\\corazon-dislike.png")));
 									corazonA.setFitHeight(25);
 									corazonA.setFitWidth(25);
-								}
+								} // Sino no hace falta ya que lo tiene ya
 							} else {
 								necesitasLogearte();
 							}
@@ -429,13 +427,13 @@ public class VentanaProducto extends Stage {
 					vboxCorazonR.setOnMouseClicked(event -> {
 						try {
 							if (userLog != DESCONECTADO) {
-								if (likeSel != 0) {
-									if (likeSel == -1) {
+								int likeSelec = ProductoDAO.usuarioComentarioLike(con, userLog, idcomentario);
+								if (likeSelec != 0) {
+									if (likeSelec == -1) {
 										ProductoDAO.insertarLike(con, userLog, idcomentario, 0);
 									} else {
 										ProductoDAO.actualizarLike(con, userLog, idcomentario, 0);
 									}
-									likeSel = 0;
 									ImageView corazonR = (ImageView) vboxCorazonR.getChildren().get(0);
 									corazonR.setImage(new Image(
 											new FileInputStream(".\\media\\img\\interfaz\\corazon-like.png")));
@@ -529,7 +527,7 @@ public class VentanaProducto extends Stage {
 		}
 	}
 
-	private void comprobarLikesUser(VBox vboxCorazonR, VBox vboxCorazonA) {
+	private void comprobarLikesUser(VBox vboxCorazonR, VBox vboxCorazonA, int likeSel) {
 		try {
 			if (likeSel != -1) {
 				switch (likeSel) {

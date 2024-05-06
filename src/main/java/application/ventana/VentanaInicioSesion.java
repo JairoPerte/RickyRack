@@ -35,6 +35,26 @@ public class VentanaInicioSesion extends Stage {
 	private static final int MALE_1 = 3;
 	private static final int MALE_2 = 4;
 
+	/**
+	 * Muestre una ventana donde el usuario tiene que escoger
+	 * entre todas las cookies que tena, ya que llama a
+	 * comprobarCookies(con); que devuelve un ArrayList de
+	 * enteros de ids de usuarios que hallan querido guardar la
+	 * sesión (y su hash coincida), si directamente no tiene
+	 * ninguna cookie guardada pues directamente esta ventana no
+	 * se muestra (return;).
+	 * 
+	 * Por cada id crea un gridPane que contenga el nombre,
+	 * imagen del usuario y nivel de dicho id guardado en el
+	 * ArrayList, y cuando clicke alguno de los gridPane cambia
+	 * App.userLog que es la sesión del usuario en ese momento
+	 * (por defecto es -1 que es desconectado) al id del
+	 * gridPane seleccionado y luego se cierra para dar paso a
+	 * la aplicación principal.
+	 * 
+	 * @param con Conexión a la Base de Datos para comprobar el
+	 *            hash con comprobarCookies(con);
+	 */
 	public VentanaInicioSesion(Connection con) {
 		ScrollPane paneScroll = new ScrollPane();
 		VBox usuariosIniciados = new VBox();
