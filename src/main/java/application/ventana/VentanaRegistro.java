@@ -18,6 +18,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -155,13 +156,12 @@ public class VentanaRegistro extends Stage {
 								int idGuardado = UsuarioDAO.crearUsuario(con, txtUsuario, txtContrasena, imagenSel,
 										guardarInicioSesion.isSelected());
 								App.userLog = idGuardado;
+								// Creamos el PaneDistribucion con el id
+								BorderPane nuevoPaneDistribution = new PaneDistribucion(App.userLog, stage, con);
+								// Obtenemos la escena
+								Scene escenaNueva = stage.getScene();
 								this.close();
-								stage.close();
-								Scene scene = new Scene(new PaneDistribucion(App.userLog, stage, con), 900, 700);
-								scene.getStylesheets()
-										.add(getClass().getResource("/estilos/application.css").toExternalForm());
-								stage.setScene(scene);
-								stage.show();
+								escenaNueva.setRoot(nuevoPaneDistribution);
 							} else {
 								// throws ContrasenasNoCoincidentes
 							}
@@ -247,7 +247,7 @@ public class VentanaRegistro extends Stage {
 		this.showAndWait();
 	}
 
-	public void borrarSeleccion(int imgSel) {
+	private void borrarSeleccion(int imgSel) {
 		switch (imgSel) {
 		case 1:
 			imagenes.getChildren().get(0).setId("1");

@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -84,13 +85,12 @@ public class VentanaIniciarSesion extends Stage {
 									Hash.crearHash(con, id);
 								}
 								App.userLog = id;
+								// Creamos el PaneDistribucion con el id
+								BorderPane nuevoPaneDistribution = new PaneDistribucion(App.userLog, stage, con);
+								// Obtenemos la escena
+								Scene escenaNueva = stage.getScene();
 								this.close();
-								stage.close();
-								Scene scene = new Scene(new PaneDistribucion(App.userLog, stage, con), 900, 700);
-								scene.getStylesheets()
-										.add(getClass().getResource("/estilos/application.css").toExternalForm());
-								stage.setScene(scene);
-								stage.show();
+								escenaNueva.setRoot(nuevoPaneDistribution);
 							} else {
 								this.numFallos++;
 								if (numFallos > 3) {

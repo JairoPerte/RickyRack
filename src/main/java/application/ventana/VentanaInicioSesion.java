@@ -167,7 +167,6 @@ public class VentanaInicioSesion extends Stage {
 			this.initModality(Modality.WINDOW_MODAL);
 			this.setScene(escena);
 
-			// Mostramos
 			this.showAndWait();
 		} catch (SQLException e) {
 		} catch (FileNotFoundException e) {

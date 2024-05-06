@@ -6,8 +6,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import application.App;
 import application.database.model.ProductoDAO;
+import application.ventana.VentanaAnadirProducto;
+import application.ventana.VentanaProducto;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -20,6 +24,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
 public class Productos extends ScrollPane {
 
@@ -29,10 +34,10 @@ public class Productos extends ScrollPane {
 	 * Carga todos los productos en un ScrollPane de una
 	 * determinada categoría
 	 * 
-	 * @param userLog user conectado/no conectado
-	 * @param categoria     la categoria a cargar
+	 * @param userLog   user conectado/no conectado
+	 * @param categoria la categoria a cargar
 	 */
-	public Productos(int userLog, int categoria, Connection con) {
+	public Productos(int userLog, int categoria, Connection con, Stage stage) {
 		try {
 			ResultSet rs = ProductoDAO.obtenerProductos(con, categoria);
 
@@ -93,6 +98,17 @@ public class Productos extends ScrollPane {
 				titulo.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
 						new BorderWidths(2))));
 
+				addProd.setId("prodCat");
+				addProd.setOnMouseEntered(event -> {
+					addProd.getScene().setCursor(Cursor.HAND);
+				});
+				addProd.setOnMouseExited(event -> {
+					addProd.getScene().setCursor(Cursor.DEFAULT);
+				});
+				addProd.setOnMouseClicked(event -> {
+					new VentanaAnadirProducto(stage, con, categoria, App.userLog);
+				});
+
 				// Lo añadimos al producto total
 				prodsCats.getChildren().add(addProd);
 
@@ -106,7 +122,9 @@ public class Productos extends ScrollPane {
 			// Para que sea responsiva
 			this.setFitToWidth(true);
 			this.setFitToHeight(true);
-		} catch (SQLException e) {
+		} catch (
+
+		SQLException e) {
 			// Throws ConexionFallida
 		}
 	}
@@ -124,15 +142,17 @@ public class Productos extends ScrollPane {
 			GridPane prodCat = new GridPane();
 			GridPane cuerpo = cargarCuerpoProducto(con, rs);
 
+			int id = rs.getInt("idproducto");
+
 			// Buscamos toda la multimedia relacionada con ese producto
-			ResultSet multimedias = ProductoDAO.obtenerMultiMedia(con, rs.getInt("idproducto"));
-			boolean tieneFoto = false;
+			ResultSet multimedias = ProductoDAO.obtenerMultiMedia(con, id);
+			boolean tienePortada = false;
 
 			// Buscamos imagen para ponerla (mientras que no ha
 			// encontrado imagen y siga habiendo multimedias que buscar)
-			while (!tieneFoto && multimedias.next()) {
-				if (multimedias.getString("tipo").equals("I")) {
-					tieneFoto = true;
+			while (!tienePortada && multimedias.next()) {
+				if (multimedias.getString("tipo").equals("P")) {
+					tienePortada = true;
 				}
 			}
 
@@ -155,7 +175,7 @@ public class Productos extends ScrollPane {
 				// Si no hay pues mostramos una label que avisa que no hay
 				// para ese articulo
 			} catch (Exception e) {
-				Label imgProd = new Label("No hay imagen para este artículo");
+				Label imgProd = new Label("No hay portada para este artículo");
 
 				imgProd.setTextAlignment(TextAlignment.CENTER);
 
@@ -190,9 +210,16 @@ public class Productos extends ScrollPane {
 			prodCat.setMaxHeight(120);
 			prodCat.setMinHeight(120);
 			prodCat.setPadding(new Insets(10));
-			prodCat.setBorder(new Border(
-					new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
-
+			prodCat.setId("prodCat");
+			prodCat.setOnMouseEntered(event -> {
+				prodCat.getScene().setCursor(Cursor.HAND);
+			});
+			prodCat.setOnMouseExited(event -> {
+				prodCat.getScene().setCursor(Cursor.DEFAULT);
+			});
+			prodCat.setOnMouseClicked(event -> {
+				new VentanaProducto(con, App.userLog, id);
+			});
 			return prodCat;
 		} catch (SQLException e) {
 			// throws ConexionFallida

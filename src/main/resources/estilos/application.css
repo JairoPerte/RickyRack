@@ -11,3 +11,14 @@
 }
 
 /*TabPane*/
+/*ScrollPane*/
+/*GridPane*/
+/*Producto*/
+#prodCat{
+	-fx-border-color: #808080;
+    -fx-border-width: 2px;
+}
+
+#prodCat:hover{
+	-fx-border-color: #ff0000;
+}

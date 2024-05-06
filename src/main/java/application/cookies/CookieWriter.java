@@ -135,4 +135,11 @@ public class CookieWriter {
 		}
 		return idReferencias;
 	}
+
+	public static void eliminarCookie(int userLog) {
+		File cookie = new File(".\\Cookies\\Cookies_User" + userLog + ".pdf");
+		if (cookie.exists()) {
+			cookie.delete();
+		}
+	}
 }

@@ -114,7 +114,11 @@ public class VentanaContacto extends Stage {
 
 		Scene scene = new Scene(contacto, 500, 400);
 		scene.getStylesheets().add(getClass().getResource("/estilos/contacto.css").toExternalForm());
-
+		try {
+			this.getIcons().add(new Image(new FileInputStream(".\\media\\img\\interfaz\\estrella-relleno.png")));
+		} catch (FileNotFoundException e) {
+			// throws FaltaInterfaz
+		}
 		this.setTitle("Formulario de Contacto");
 		this.initOwner(stage);
 		this.initModality(Modality.WINDOW_MODAL);

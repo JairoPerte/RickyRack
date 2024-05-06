@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import application.cookies.Hash;
+import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 public class UsuarioDAO {
 
@@ -101,7 +103,7 @@ public class UsuarioDAO {
 		}
 	}
 
-	public static void cambiarContrasena(Connection con, int id, String password, String newPassword) {
+	public static void cambiarContrasena(Connection con, int id, String password, String newPassword, Stage stage) {
 		try {
 			if (comprobarContrasena(con, id, password)) {
 				PreparedStatement pstmt = con.prepareStatement("UPDATE usuario SET password=? WHERE idusuario=?");
@@ -109,8 +111,13 @@ public class UsuarioDAO {
 				pstmt.setInt(2, id);
 
 				pstmt.executeUpdate();
-			} else {
-				// throws ConetrasenaErronea
+
+				stage.close();
+				Alert alertaNoImg = new Alert(Alert.AlertType.INFORMATION);
+
+				alertaNoImg.setTitle("Contraseña Cambiada");
+				alertaNoImg.setHeaderText("Contraseña Cambiada con éxito");
+				alertaNoImg.show();
 			}
 		} catch (SQLException e) {
 		}

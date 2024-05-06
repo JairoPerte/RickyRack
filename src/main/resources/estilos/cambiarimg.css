@@ -1,0 +1,13 @@
+.imagen{
+    -fx-border-color: #808080;
+    -fx-border-width: 2px;
+}
+
+.imagen:hover{
+    -fx-border-color: #000000;
+}
+
+#imagen-selec{
+	-fx-border-color: #00cd00 !important;
+    -fx-border-width: 2px;
+}

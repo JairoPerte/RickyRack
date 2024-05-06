@@ -6,17 +6,21 @@ import java.sql.SQLException;
 
 import application.App;
 import application.database.model.UsuarioDAO;
+import application.ventana.VentanaAcercaDe;
+import application.ventana.VentanaAutores;
+import application.ventana.VentanaAyuda;
+import application.ventana.VentanaCambiarContraseña;
+import application.ventana.VentanaCambiarImg;
 import application.ventana.VentanaCargando;
 import application.ventana.VentanaContacto;
+import application.ventana.VentanaEliminarCuenta;
 import application.ventana.VentanaIniciarSesion;
-import application.ventana.VentanaInicioSesion;
 import application.ventana.VentanaRegistro;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
@@ -34,6 +38,37 @@ public class PaneDistribucion extends BorderPane {
 	public PaneDistribucion(int userLog, Stage stage, Connection con) {
 		// Mientras que va cargando
 		VentanaCargando carga = new VentanaCargando();
+
+		// ZONA CENTRAL PESTAÑAS
+
+		// Panel de pestañas
+		TabPane panelPestanas = new TabPane();
+
+		// las tres pestañas
+		Tab tabLibros = new Tab("Libros");
+		Tab tabPeliculas = new Tab("Peliculas");
+		Tab tabVideojuegos = new Tab("Videojuegos");
+
+		// Las añadimos y despues la escribiremos
+		panelPestanas.getTabs().addAll(tabLibros, tabPeliculas, tabVideojuegos);
+
+		// Ponemos que no se puedan cerrar
+		tabLibros.setClosable(false);
+		tabPeliculas.setClosable(false);
+		tabVideojuegos.setClosable(false);
+
+		// Creamos todos los scrollPane que necesitamos
+		Productos libros = new Productos(userLog, LIBROS, con, stage);
+		Productos peliculas = new Productos(userLog, PELICULAS, con, stage);
+		Productos videojuegos = new Productos(userLog, VIDEOJUEGOS, con, stage);
+
+		// Lo asignamos a las pestañas
+		tabLibros.setContent(libros);
+		tabPeliculas.setContent(peliculas);
+		tabVideojuegos.setContent(videojuegos);
+
+		// Lo posicionamos en el centro
+		this.setCenter(panelPestanas);
 
 		// ZONA SUPERIOR MENU
 
@@ -72,22 +107,28 @@ public class PaneDistribucion extends BorderPane {
 			iCerrar.setOnAction(event -> {
 				// Desconectado por defecto
 				App.userLog = DESCONECTADO;
-				// Lo cerramos
-				stage.close();
-				// Mostramos la ventan de inicio de sesión de cookies
-				// guardadas (por si quiere iniciar sesión con otra cuenta o
-				// no iniciar sesión)
-				new VentanaInicioSesion(con);
-				// Para que cargen de nuevo los cambios
-				Scene escenaNueva = new Scene(new PaneDistribucion(App.userLog, stage, con), 900, 700);
-				escenaNueva.getStylesheets().add(getClass().getResource("/estilos/application.css").toExternalForm());
-				stage.setScene(escenaNueva);
-				stage.show();
+				// Creamos el PaneDistribucion capado
+				BorderPane nuevoPaneDistribution = new PaneDistribucion(App.userLog, stage, con);
+				// Obtenemos la escena
+				Scene escenaNueva = stage.getScene();
+				escenaNueva.setRoot(nuevoPaneDistribution);
 			});
 
 			MenuItem iCambiarImg = new MenuItem("Cambiar Imagen");
 			MenuItem iCambiarPassword = new MenuItem("Cambiar Contraseña");
 			MenuItem iEliminar = new MenuItem("Eliminar Cuenta");
+
+			iCambiarPassword.setOnAction(event -> {
+				new VentanaCambiarContraseña(con, stage, userLog);
+			});
+
+			iCambiarImg.setOnAction(event -> {
+				new VentanaCambiarImg(con, userLog, stage);
+			});
+
+			iEliminar.setOnAction(event -> {
+				new VentanaEliminarCuenta(con, stage, userLog);
+			});
 
 			mConfiguracion.getItems().addAll(iCambiarImg, iCambiarPassword, iEliminar);
 		}
@@ -102,6 +143,30 @@ public class PaneDistribucion extends BorderPane {
 		MenuItem iContacto = new MenuItem("Contacta con nosotros");
 		MenuItem iAyuda = new MenuItem("Ayuda");
 
+		// Eventos
+
+		// Cuando pulsamos en la opcion de menu salir cerramos la
+		// app
+		iSalir.setOnAction(event -> {
+			stage.close();
+		});
+
+		iContacto.setOnAction(event -> {
+			new VentanaContacto(stage, con);
+		});
+
+		iAutores.setOnAction(event -> {
+			new VentanaAutores();
+		});
+
+		iAyuda.setOnAction(event -> {
+			new VentanaAyuda();
+		});
+
+		iAcercaDe.setOnAction(event -> {
+			new VentanaAcercaDe();
+		});
+
 		// Añadimos los menu items
 		mAyuda.getItems().addAll(iAcercaDe, iContacto, iAutores, iAyuda);
 
@@ -110,48 +175,6 @@ public class PaneDistribucion extends BorderPane {
 
 		// Lo posicionamos arriba
 		this.setTop(barraMenu);
-
-		// ZONA CENTRAL PESTAÑAS
-
-		// Panel de pestañas
-		TabPane panelPestanas = new TabPane();
-
-		// las tres pestañas
-		Tab tabLibros = new Tab("Libros");
-		Tab tabPeliculas = new Tab("Peliculas");
-		Tab tabVideojuegos = new Tab("Videojuegos");
-
-		// Las añadimos y despues la escribiremos
-		panelPestanas.getTabs().addAll(tabLibros, tabPeliculas, tabVideojuegos);
-
-		// Ponemos que no se puedan cerrar
-		tabLibros.setClosable(false);
-		tabPeliculas.setClosable(false);
-		tabVideojuegos.setClosable(false);
-
-		// Creamos todos los scrollPane que necesitamos
-		ScrollPane libros = new Productos(userLog, LIBROS, con);
-		ScrollPane peliculas = new Productos(userLog, PELICULAS, con);
-		ScrollPane videojuegos = new Productos(userLog, VIDEOJUEGOS, con);
-
-		// Lo asignamos a las pestañas
-		tabLibros.setContent(libros);
-		tabPeliculas.setContent(peliculas);
-		tabVideojuegos.setContent(videojuegos);
-
-		// Lo posicionamos en el centro
-		this.setCenter(panelPestanas);
-
-		// Eventos
-		iContacto.setOnAction(event -> {
-			new VentanaContacto(stage, con);
-		});
-
-		// Cuando pulsamos en la opcion de menu salir cerramos la
-		// app
-		iSalir.setOnAction(event -> {
-			stage.close();
-		});
 
 		// Cuando ya ha cargado es cuando la pestaña termina
 		Platform.runLater(() -> carga.close());

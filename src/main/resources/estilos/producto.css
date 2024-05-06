@@ -1,0 +1,40 @@
+#titulo{
+	-fx-font-weight: bold;
+}
+
+#fecha{
+	-fx-border-color: #000000;
+    -fx-border-width: 2px;
+    -fx-text-fill: #00ff00;
+}
+
+#encabezado{
+	-fx-border-color: #000000;
+    -fx-border-width: 2px;
+}
+
+#autor{
+	-fx-border-color: #000000;
+    -fx-border-width: 2px;
+    -fx-text-fill: #0000ff;
+    -fx-font-style: italic;
+}
+
+#genero{
+	-fx-border-color: #000000;
+    -fx-border-width: 2px;
+    -fx-text-fill: #ff0000;
+}
+
+#duracion{
+	-fx-border-color: #000000;
+    -fx-border-width: 2px;
+}
+
+#escribir-comentario{
+	-fx-background-color: #CCCCCC;
+	-fx-text-fill: #000000;
+	-fx-font-weight: bold;
+	-fx-border-color: #0000ff;
+    -fx-border-width: 3px;
+}
