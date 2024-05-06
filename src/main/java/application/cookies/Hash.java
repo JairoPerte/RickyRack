@@ -7,6 +7,16 @@ import java.util.Random;
 
 public class Hash {
 
+	/**
+	 * Comprueba si es el hash introducido y el id introducido
+	 * hay resultados en la base de datos, si hay resultados
+	 * significan que están correctos sino no están bien
+	 * 
+	 * @param  con  conexión a la Base de Datos
+	 * @param  id   id para comprobar el hash
+	 * @param  hash el hash a comprobar
+	 * @return      true si está bien, sino devuelve false
+	 */
 	public static boolean comprobarHash(Connection con, int id, String hash) {
 		try {
 			PreparedStatement pstmt = con
@@ -19,6 +29,16 @@ public class Hash {
 		}
 	}
 
+	/**
+	 * Crea el hash, normalmente esta funcion solo se llama
+	 * cuando está marcado en iniciar sesión o registrarse para
+	 * asignarle un hash y que pueda iniciar sesión sin
+	 * introducir contraseña, ya que además crea las cookies en
+	 * un PDF.
+	 * 
+	 * @param con conexión a la Base de Datos
+	 * @param id  id a crear el hash
+	 */
 	public static void crearHash(Connection con, int id) {
 		try {
 			PreparedStatement pstmt = con.prepareStatement("UPDATE usuario SET hash=? WHERE idusuario=?");
@@ -34,6 +54,13 @@ public class Hash {
 		}
 	}
 
+	/**
+	 * Le quita el hash de la base de datos cuando se elimine la
+	 * sesión
+	 * 
+	 * @param con conexión a la Base de Datos
+	 * @param id  id a quitar el hash
+	 */
 	public static void quitarHash(Connection con, int id) {
 		try {
 			PreparedStatement pstmt = con.prepareStatement("UPDATE usuario SET hash=null WHERE idusuario=?");
@@ -44,6 +71,12 @@ public class Hash {
 		}
 	}
 
+	/**
+	 * Genera un string aleatorio de los caracteres permitidos
+	 * de una longitud entre 6-8.
+	 * 
+	 * @return un hash
+	 */
 	public static String generarHash() {
 		String caracteresPermitidos = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 		StringBuilder hash = new StringBuilder();

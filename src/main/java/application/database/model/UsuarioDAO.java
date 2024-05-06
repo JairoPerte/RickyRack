@@ -16,6 +16,17 @@ public class UsuarioDAO {
 	private static final int ERROR_SQL = -2;
 	private static final int USUARIO_EXISTENTE = -1;
 
+	/**
+	 * Crea un usuario con los datos introducidos
+	 * 
+	 * @param  con           conexión a la Base de Datos
+	 * @param  nombre        nombre del user
+	 * @param  password      contraseña del user
+	 * @param  img           numero de la imagen del user
+	 * @param  guardarSesion si quiere crear el hash o no
+	 * @return               el id de la sesión (del usuario
+	 *                       creado)
+	 */
 	public static int crearUsuario(Connection con, String nombre, String password, int img, boolean guardarSesion) {
 		try {
 			if (!getUsuario(con, nombre).next()) {
@@ -50,6 +61,14 @@ public class UsuarioDAO {
 		}
 	}
 
+	/**
+	 * Obtiene el usuario con un determinado id
+	 * 
+	 * @param  con conexión a la BD
+	 * @param  id  id del usuario
+	 * @return     el result set con todos los datos del usuario
+	 *             menos contraseña y hash
+	 */
 	public static ResultSet getUsuario(Connection con, int id) {
 		try {
 			PreparedStatement pstmt = con
@@ -61,6 +80,14 @@ public class UsuarioDAO {
 		}
 	}
 
+	/**
+	 * Obtiene el usuario con un determinado nombre del user
+	 * 
+	 * @param  con    conexión a la BD
+	 * @param  nombre nombre del usuario
+	 * @return        el result set con todos los datos del
+	 *                usuario menos contraseña y hash
+	 */
 	public static ResultSet getUsuario(Connection con, String nombre) {
 		try {
 			PreparedStatement pstmt = con
@@ -72,6 +99,12 @@ public class UsuarioDAO {
 		}
 	}
 
+	/**
+	 * Elimina a un usuarario a través de su id
+	 * 
+	 * @param con conexión a la BD
+	 * @param id  id del usuario a eliminar
+	 */
 	public static void eliminarUsuario(Connection con, int id) {
 		try {
 			PreparedStatement pstmt = con.prepareStatement("DELETE FROM usuario WHERE idusuario=?");
@@ -81,6 +114,15 @@ public class UsuarioDAO {
 		}
 	}
 
+	/**
+	 * Comprueba si el usuario tiene esa dicha contraseña a
+	 * través de su id
+	 * 
+	 * @param  con      conexión a la BD
+	 * @param  id       id del usuario a comprobar
+	 * @param  password contraseña a comprobar
+	 * @return
+	 */
 	public static boolean comprobarContrasena(Connection con, int id, String password) {
 		try {
 			PreparedStatement pstmt = con
@@ -93,6 +135,15 @@ public class UsuarioDAO {
 		}
 	}
 
+	/**
+	 * Comprueba si el usuario tiene esa dicha contraseña a
+	 * través de su nombre del usuario
+	 * 
+	 * @param  con      conexión a la BD
+	 * @param  nombre   nombre del usuario a comprobar
+	 * @param  password contraseña a comprobar
+	 * @return
+	 */
 	public static boolean comprobarContrasena(Connection con, String nombre, String password) {
 		try {
 			PreparedStatement pstmt = con
@@ -105,6 +156,17 @@ public class UsuarioDAO {
 		}
 	}
 
+	/**
+	 * Cambia la contraseña si el usuario y la contraseña
+	 * coinciden
+	 * 
+	 * @param con         conexion a la BD
+	 * @param id          id del usuario a cambiar contraseña
+	 * @param password    contraseña antigua
+	 * @param newPassword contraseña nueva
+	 * @param stage       stage que ha llamado esta función para
+	 *                    poder cerrarlo
+	 */
 	public static void cambiarContrasena(Connection con, int id, String password, String newPassword, Stage stage) {
 		try {
 			if (comprobarContrasena(con, id, password)) {
@@ -126,6 +188,17 @@ public class UsuarioDAO {
 		}
 	}
 
+	/**
+	 * Le sube de experiencia a un usuario, y si tiene más de
+	 * 500 que es el tope sube de nivel y la experiencia se la
+	 * volvemos a asignar a 0
+	 * 
+	 * @param  con       conexión a la BD
+	 * @param  id        id del usuario
+	 * @param  aumentoXP cantidad a aumentar la experiencia
+	 * @return           false sino ha podido subir nivel o true
+	 *                   si ha posido
+	 */
 	public static boolean amuentarXP(Connection con, int id, int aumentoXP) {
 		try {
 			ResultSet rs = getUsuario(con, id);
@@ -159,6 +232,14 @@ public class UsuarioDAO {
 		}
 	}
 
+	/**
+	 * Sube el nivel de un usuario
+	 * 
+	 * @param  con   conexión a la BD
+	 * @param  id    id del usuario
+	 * @param  nivel nivel a subir
+	 * @return       devuelve true si ha subido de nivel sino no
+	 */
 	public static boolean subirNivel(Connection con, int id, int nivel) {
 		try {
 			PreparedStatement pstmt = con.prepareStatement("UPDATE usuario SET nivel=? WHERE idusuario=?");
@@ -172,6 +253,13 @@ public class UsuarioDAO {
 		}
 	}
 
+	/**
+	 * Cambia la imagen de un usuario
+	 * 
+	 * @param con conexión a la BD
+	 * @param id  id del usuario a cambiar imagen
+	 * @param img imagen a actualizar
+	 */
 	public static void cambiarImagen(Connection con, int id, int img) {
 		try {
 			PreparedStatement pstmt = con.prepareStatement("UPDATE usuario SET imagen=? WHERE idusuario=?");

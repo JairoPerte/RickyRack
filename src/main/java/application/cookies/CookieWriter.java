@@ -19,6 +19,16 @@ public class CookieWriter {
 
 	private static final int USUARIO_DESCONECTADO = -1;
 
+	/**
+	 * Te crea unas cookies en un pdf con un determinado id y un
+	 * determinado hash esta opción normalmente solo se llama
+	 * cuando se inicia sesión o registrarse y si la checkbox
+	 * guardar iniciar sesión está activada. La crea en
+	 * .\\Cookies\\Cookies_User(ID).pdf
+	 * 
+	 * @param id   id de la sesión a guardar
+	 * @param hash el string que necesario para entrar
+	 */
 	public static void crearCookies(int id, String hash) {
 		try {
 			// Si no exite el directo lo creamos
@@ -64,6 +74,17 @@ public class CookieWriter {
 		}
 	}
 
+	/**
+	 * Devuelve una lista de ids, esta lista añade todos los ids
+	 * que correspondan si está vacia o algo va mal se posiciona
+	 * en la lista en la posición -1, sino guarda todos los id
+	 * correctos que tengan el id y el hash bien bien en la base
+	 * de datos al igual que en el PDF
+	 * 
+	 * @param  con conexión a la Base de Datos a comprobar el id
+	 *             y el hash
+	 * @return     la lista de id de Sesiones
+	 */
 	public static ArrayList<Integer> comprobarCookies(Connection con) {
 
 		// Buscamos en el directorios
@@ -136,6 +157,11 @@ public class CookieWriter {
 		return idReferencias;
 	}
 
+	/**
+	 * Elimina el PDF que contiene las cookies del userLog
+	 * 
+	 * @param userLog id de la cookie a eliminar
+	 */
 	public static void eliminarCookie(int userLog) {
 		File cookie = new File(".\\Cookies\\Cookies_User" + userLog + ".pdf");
 		if (cookie.exists()) {

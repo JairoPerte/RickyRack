@@ -1,13 +1,17 @@
 package application.ventana;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import application.database.model.ProductoDAO;
 import application.database.model.UsuarioDAO;
 import application.exceptions.CampoObligatorios;
+import application.exceptions.FaltaInterfaz;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -20,6 +24,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -30,6 +35,13 @@ public class VentanaAnadirProducto extends Stage {
 	private ArrayList<File> imagenes = new ArrayList<File>();
 	private ArrayList<String> tipo = new ArrayList<String>();
 
+	/**
+	 * 
+	 * @param stage     stage de la aplicacion principal
+	 * @param con       conexion a la BD
+	 * @param categoria categoria de dicho producto
+	 * @param userLog   id de la sesión del usuario
+	 */
 	public VentanaAnadirProducto(Stage stage, Connection con, int categoria, int userLog) {
 		GridPane anadirProd = new GridPane();
 
@@ -131,32 +143,45 @@ public class VentanaAnadirProducto extends Stage {
 		}
 
 		aceptar.setOnMouseClicked(event -> {
-			if (txtTitulo.getText().length() != 0 && txtSinopsis.getText().length() != 0
-					&& txtAutor.getText().length() != 0 && duracion.getText().length() != 0
-					&& genero.getValue() != null) {
-				try {
-					int durar = Integer.valueOf(duracion.getText());
-					int id = ProductoDAO.crearProducto(con, categoria, txtTitulo.getText(), txtSinopsis.getText(),
-							genero.getValue(), durar, txtAutor.getText(), fecha.getValue().toString());
-					int indice = 0;
-					for (File imagen : imagenes) {
-						ProductoDAO.insertarMultimedia(con, id, imagen, tipo.get(indice));
-						indice++;
+			try {
+				if (txtTitulo.getText().length() != 0 && txtSinopsis.getText().length() != 0
+						&& txtAutor.getText().length() != 0 && duracion.getText().length() != 0
+						&& genero.getValue() != null) {
+					if (!ProductoDAO.obtenerProducto(con, txtTitulo.getText()).next()) {
+						try {
+							int durar = Integer.valueOf(duracion.getText());
+							int id = ProductoDAO.crearProducto(con, categoria, txtTitulo.getText(),
+									txtSinopsis.getText(), genero.getValue(), durar, txtAutor.getText(),
+									fecha.getValue().toString());
+							int indice = 0;
+							for (File imagen : imagenes) {
+								ProductoDAO.insertarMultimedia(con, id, imagen, tipo.get(indice));
+								indice++;
+							}
+							Alert alert = new Alert(AlertType.INFORMATION);
+							alert.setTitle("Felicidades has subido el articulo");
+							alert.setHeaderText("Acabas de ganar 200 de experiencia");
+							UsuarioDAO.amuentarXP(con, userLog, 200);
+							alert.show();
+							this.close();
+						} catch (NumberFormatException e) {
+							Alert alert = new Alert(AlertType.INFORMATION);
+							alert.setTitle("Revise sus datos");
+							alert.setHeaderText("Porfavor introduzca un numero entero en duración");
+							alert.initOwner(this);
+							alert.show();
+						}
+					} else {
+						Alert alerta = new Alert(AlertType.WARNING);
+						alerta.setTitle("Producto Existente");
+						alerta.setHeaderText("Ya existe un producto con ese nombre");
+						alerta.initOwner(this);
+						alerta.show();
 					}
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Felicidades has subido el articulo");
-					alert.setHeaderText("Acabas de ganar 200 de experiencia");
-					UsuarioDAO.amuentarXP(con, userLog, 200);
-					alert.show();
-					this.close();
-				} catch (NumberFormatException e) {
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Revise sus datos");
-					alert.setHeaderText("Porfavor introduzca un numero entero en duración");
-					alert.show();
+				} else {
+					new CampoObligatorios(AlertType.WARNING, this);
 				}
-			} else {
-				new CampoObligatorios(AlertType.WARNING, this);
+			} catch (SQLException e) {
 			}
 		});
 
@@ -165,6 +190,11 @@ public class VentanaAnadirProducto extends Stage {
 		this.initOwner(stage);
 		this.initModality(Modality.WINDOW_MODAL);
 		this.setScene(escena);
+		try {
+			this.getIcons().add(new Image(new FileInputStream(".\\media\\img\\interfaz\\boton-add.png")));
+		} catch (FileNotFoundException e) {
+			new FaltaInterfaz(AlertType.ERROR, this);
+		}
 
 		// Mostramos
 		this.show();

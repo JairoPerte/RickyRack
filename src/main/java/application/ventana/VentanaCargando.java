@@ -12,6 +12,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class VentanaCargando extends Stage {
+
+	/**
+	 * Ventana de Carga
+	 */
 	public VentanaCargando() {
 		try {
 			Scene escena = new Scene(new Label(), 400, 200);

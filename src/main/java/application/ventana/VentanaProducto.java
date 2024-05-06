@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import application.database.model.ProductoDAO;
 import application.database.model.UsuarioDAO;
+import application.exceptions.FaltaInterfaz;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -47,6 +48,18 @@ public class VentanaProducto extends Stage {
 	private int estrellasSel;
 	private static boolean primerComent = false;
 
+	/**
+	 * Crea la ventana producto con el encabezado (datos
+	 * tipicos, portada, y boton que abre la ventana galería), y
+	 * el cuerpo que sería la descripción y la zona de
+	 * comentarios y si no está logeado cuando entró en el
+	 * producto no podrá ni comentar, ni darle likes a los
+	 * comentarios ni calificar.
+	 * 
+	 * @param con        conexión a la base de datos
+	 * @param userLog    id del usuario logeado
+	 * @param idProducto id del producto en cuestion
+	 */
 	public VentanaProducto(Connection con, int userLog, int idProducto) {
 		try {
 			if (userLog != DESCONECTADO) {
@@ -89,19 +102,26 @@ public class VentanaProducto extends Stage {
 			encabezado.getChildren().addAll(estrellas, titulo);
 
 			try {
+				// Añadimos las 5 estrellas al HBox
 				for (int i = 1; i <= 5; i++) {
 					VBox vboxEstrella = new VBox();
 					ImageView estrella = new ImageView(
 							new Image(new FileInputStream(".\\media\\img\\interfaz\\estrella-sin-relleno.png")));
 					estrella.setFitHeight(25);
 					estrella.setFitWidth(25);
-					int posicion = i;
 					vboxEstrella.getChildren().add(estrella);
 					estrellas.getChildren().add(vboxEstrella);
+
+					int posicion = i;
 					vboxEstrella.setOnMouseClicked(event -> {
 						if (userLog != DESCONECTADO) {
+
+							// Si le ha vuelto a dar a la misma estrella que le habia
+							// calificado no cambia
 							if (estrellasSel != posicion) {
 								try {
+									// Dependiendo si no le había dado antes
+									// insertamos/actualizamos
 									if (estrellasSel == 0) {
 										estrellasSel = posicion;
 										ProductoDAO.insertarCalificacion(con, idProducto, userLog, estrellasSel);
@@ -112,8 +132,12 @@ public class VentanaProducto extends Stage {
 
 									// Modificamos las imagenes
 									for (int j = 0; j < estrellas.getChildren().size(); j++) {
+
+										// Obtenemos las antiguas y las sustituimos
 										VBox vboxNuevo = (VBox) estrellas.getChildren().get(j);
 										ImageView imgView = (ImageView) vboxNuevo.getChildren().get(0);
+
+										// para que las anteriores estén marcadas
 										if (j <= (posicion - 1)) {
 											imgView.setImage(new Image(new FileInputStream(
 													".\\media\\img\\interfaz\\estrella-relleno.png")));
@@ -121,11 +145,12 @@ public class VentanaProducto extends Stage {
 											imgView.setImage(new Image(new FileInputStream(
 													".\\media\\img\\interfaz\\estrella-sin-relleno.png")));
 										}
+
 										imgView.setFitHeight(25);
 										imgView.setFitWidth(25);
 									}
 								} catch (FileNotFoundException e) {
-									// throws FaltaInterfaz
+									new FaltaInterfaz(AlertType.ERROR, this);
 								}
 							}
 						} else {
@@ -139,7 +164,7 @@ public class VentanaProducto extends Stage {
 					comprobarEstrellasUser(estrellas);
 				}
 			} catch (FileNotFoundException e) {
-				// throws FaltaInterfaz
+				new FaltaInterfaz(AlertType.ERROR, this);
 			}
 
 			// FECHA + AUTOR + GENERO + DURACION + CALIFICACIONES
@@ -152,20 +177,24 @@ public class VentanaProducto extends Stage {
 			fecha.prefHeight(50);
 			fecha.setAlignment(Pos.BASELINE_CENTER);
 			fecha.setId("fecha");
+
 			Label autor = new Label(producto.getString("autor"));
 			autor.prefHeight(50);
 			autor.setAlignment(Pos.BASELINE_CENTER);
 			autor.setId("autor");
+
 			Label genero = new Label(producto.getString("genero"));
 			genero.prefHeight(50);
 			genero.setAlignment(Pos.BASELINE_CENTER);
 			genero.setId("genero");
+
 			Button galeriaBtn = new Button("Galería");
 			galeriaBtn.prefHeight(50);
 			galeriaBtn.setAlignment(Pos.BASELINE_CENTER);
 
 			otros.getChildren().addAll(fecha, autor, genero);
 
+			// No comparten las mismas categorias
 			try {
 				switch (categoria) {
 				case 0:
@@ -194,9 +223,10 @@ public class VentanaProducto extends Stage {
 					break;
 				}
 			} catch (FileNotFoundException e) {
-				// throws FaltaInterfaz
+				new FaltaInterfaz(AlertType.ERROR, this);
 			}
 
+			// La estrella al lado de la label calificacion
 			try {
 				ImageView imgEstrella = new ImageView(
 						new Image(new FileInputStream(".\\media\\img\\interfaz\\estrella-relleno.png")));
@@ -215,7 +245,7 @@ public class VentanaProducto extends Stage {
 
 				// Le mandamos un fallo de interfaz(FaltaInterfaz)
 			} catch (FileNotFoundException e) {
-				// throws FaltaInterfaz
+				new FaltaInterfaz(AlertType.ERROR, this);
 			}
 
 			double calificacionMedia = ProductoDAO.calificacionMedia(con, idProducto);
@@ -373,7 +403,7 @@ public class VentanaProducto extends Stage {
 				comentarioNivel.setMinWidth(40);
 				gPComentario.add(comentarioNivel, 1, 1);
 
-				// Ponemos la imagen
+				// Ponemos la imagen del usuario
 				try {
 					switch (comentarios.getInt("imagen")) {
 					case FEMALE_1:
@@ -422,13 +452,14 @@ public class VentanaProducto extends Stage {
 						gPComentario.add(imgM2, 0, 0, 2, 1);
 					}
 				} catch (FileNotFoundException e) {
-					// throws FaltaInterfaz
+					new FaltaInterfaz(AlertType.ERROR, this);
 				}
 
 				Label comentario = new Label(comentarios.getString("comentario"));
 				comentario.setWrapText(true);
 				gPComentario.add(comentario, 2, 0, 1, 2);
 				GridPane.setMargin(comentario, new Insets(0, 0, 0, 10));
+
 				Label comentarioLikes = new Label(String.valueOf(comentarios.getInt("likes")) + " likes");
 				comentarioLikes.setTextAlignment(TextAlignment.CENTER);
 				GridPane.setValignment(comentarioLikes, VPos.TOP);
@@ -444,9 +475,11 @@ public class VentanaProducto extends Stage {
 					VBox vboxCorazonA = new VBox();
 
 					corazones.getChildren().addAll(vboxCorazonR, vboxCorazonA);
+
 					// Obtenemos su like
 					int likeSel = ProductoDAO.usuarioComentarioLike(con, userLog, idcomentario);
 
+					// Sino le ha dado like antes
 					if (likeSel == -1) {
 						ImageView corazonR = new ImageView(
 								new Image(new FileInputStream(".\\media\\img\\interfaz\\corazon.png")));
@@ -466,46 +499,59 @@ public class VentanaProducto extends Stage {
 						try {
 							if (userLog != DESCONECTADO) {
 								int likeSelec = ProductoDAO.usuarioComentarioLike(con, userLog, idcomentario);
+
+								// Si ya le ha dado dislike no hace falta cambiar
 								if (likeSelec != 1) {
+									// Dependiendo si no le había dado antes
+									// insertamos/actualizamos
 									if (likeSelec == -1) {
 										ProductoDAO.insertarLike(con, userLog, idcomentario, 1);
 									} else {
 										ProductoDAO.actualizarLike(con, userLog, idcomentario, 1);
 									}
+
 									ImageView corazonR = (ImageView) vboxCorazonR.getChildren().get(0);
 									corazonR.setImage(
 											new Image(new FileInputStream(".\\media\\img\\interfaz\\corazon.png")));
 									corazonR.setFitHeight(25);
 									corazonR.setFitWidth(25);
+
 									ImageView corazonA = (ImageView) vboxCorazonA.getChildren().get(0);
 									corazonA.setImage(new Image(
 											new FileInputStream(".\\media\\img\\interfaz\\corazon-dislike.png")));
 									corazonA.setFitHeight(25);
 									corazonA.setFitWidth(25);
-								} // Sino no hace falta ya que lo tiene ya
+								}
 							} else {
 								necesitasLogearte();
 							}
 						} catch (FileNotFoundException e) {
-							// throws FaltaInterfaz
+							new FaltaInterfaz(AlertType.ERROR, this);
 						}
 					});
 
 					vboxCorazonR.setOnMouseClicked(event -> {
 						try {
 							if (userLog != DESCONECTADO) {
+
 								int likeSelec = ProductoDAO.usuarioComentarioLike(con, userLog, idcomentario);
+
+								// Si ya le ha dado like no hace falta cambiar
 								if (likeSelec != 0) {
+									// Dependiendo si no le había dado antes
+									// insertamos/actualizamos
 									if (likeSelec == -1) {
 										ProductoDAO.insertarLike(con, userLog, idcomentario, 0);
 									} else {
 										ProductoDAO.actualizarLike(con, userLog, idcomentario, 0);
 									}
+
 									ImageView corazonR = (ImageView) vboxCorazonR.getChildren().get(0);
 									corazonR.setImage(new Image(
 											new FileInputStream(".\\media\\img\\interfaz\\corazon-like.png")));
 									corazonR.setFitHeight(25);
 									corazonR.setFitWidth(25);
+
 									ImageView corazonA = (ImageView) vboxCorazonA.getChildren().get(0);
 									corazonA.setImage(
 											new Image(new FileInputStream(".\\media\\img\\interfaz\\corazon.png")));
@@ -516,7 +562,7 @@ public class VentanaProducto extends Stage {
 								necesitasLogearte();
 							}
 						} catch (FileNotFoundException e) {
-							// throws FaltaInterfaz
+							new FaltaInterfaz(AlertType.ERROR, this);
 						}
 					});
 
@@ -525,15 +571,18 @@ public class VentanaProducto extends Stage {
 					gPComentarios.add(gPComentario, 0, indice);
 					indice++;
 				} catch (FileNotFoundException e) {
-					// throws FaltaInterfaz
+					new FaltaInterfaz(AlertType.ERROR, this);
 				}
 			}
 
+			// Zona para añadir comentarios
 			GridPane anadirCom = new GridPane();
+
 			TextField escribirCom = new TextField();
 			escribirCom.setId("escribir-comentario");
 			anadirCom.add(escribirCom, 0, 0);
 			escribirCom.setPrefWidth(480);
+
 			Button enviar = new Button("Enviar");
 			anadirCom.add(enviar, 1, 0);
 			anadirCom.setBorder(new Border(
@@ -544,8 +593,10 @@ public class VentanaProducto extends Stage {
 
 			enviar.setOnMouseClicked(event -> {
 				if (userLog != DESCONECTADO) {
+					// Escribimos comentario y lo colocamos a nada el comentario
 					ProductoDAO.escribirComentario(con, userLog, idProducto, escribirCom.getText());
 					escribirCom.setText("");
+					// Si es su primero le damos exp
 					if (!primerComent) {
 						Alert alerta = new Alert(AlertType.INFORMATION);
 						alerta.setTitle("Felicidades por tu primer comentario");
@@ -560,6 +611,7 @@ public class VentanaProducto extends Stage {
 			});
 
 			scrollPane.setContent(total);
+
 			this.setTitle(titulo.getText());
 			this.setResizable(false);
 			Scene escena = new Scene(scrollPane, 600, 500);
@@ -572,6 +624,13 @@ public class VentanaProducto extends Stage {
 		}
 	}
 
+	/**
+	 * Una funcion que comprueba las estrellas que tenía puesto
+	 * antes el usuario, antes de entrar, para refrescarle la
+	 * imagen y esté igual que la dejó anteriormente
+	 * 
+	 * @param estrellas
+	 */
 	private void comprobarEstrellasUser(HBox estrellas) {
 		if (estrellasSel != 0) {
 			try {
@@ -589,11 +648,21 @@ public class VentanaProducto extends Stage {
 					imgView.setFitWidth(25);
 				}
 			} catch (FileNotFoundException e) {
-				// throws FaltaInterfaz
+				new FaltaInterfaz(AlertType.ERROR, this);
 			}
 		}
 	}
 
+	/**
+	 * Una función que comprueba el like que tenia puesto
+	 * anteriormente el usuario si tenia, para refrescarle la
+	 * imagen y esté igual que la dejó anteriormente
+	 * 
+	 * @param vboxCorazonR contenedor del corazón rojo
+	 * @param vboxCorazonA contenedor del corazón azul
+	 * @param likeSel      likeSel es el like que tenia
+	 *                     seleccionado anteriormente
+	 */
 	private void comprobarLikesUser(VBox vboxCorazonR, VBox vboxCorazonA, int likeSel) {
 		try {
 			if (likeSel != -1) {
@@ -625,7 +694,7 @@ public class VentanaProducto extends Stage {
 				}
 			}
 		} catch (FileNotFoundException e) {
-			// throws FaltaInterfaz
+			new FaltaInterfaz(AlertType.ERROR, this);
 		}
 	}
 

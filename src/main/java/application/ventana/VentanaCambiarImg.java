@@ -27,6 +27,14 @@ public class VentanaCambiarImg extends Stage {
 
 	HBox imagenes;
 
+	/**
+	 * Ventana para cambiarle la imagen de perfil al usuario
+	 * conectado
+	 * 
+	 * @param con     conexión a la BD
+	 * @param userLog id del usuario conectado
+	 * @param stage   stage de la aplicación principal
+	 */
 	public VentanaCambiarImg(Connection con, int userLog, Stage stage) {
 		try {
 			GridPane paneTotal = new GridPane();

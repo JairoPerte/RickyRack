@@ -37,6 +37,16 @@ public class PaneDistribucion extends BorderPane {
 
 	private static final int DESCONECTADO = -1;
 
+	/**
+	 * Clase Constructora que crea un borderPane donde se
+	 * encuentran el meubar, los tabpane que a su vez contiene
+	 * tabs que esas tab tienen a su vez scrollpane que recibe
+	 * el constructor de productos
+	 * 
+	 * @param userLog id del usuario conectado
+	 * @param stage   stage de la aplicación principal
+	 * @param con     conexión a la base de datos
+	 */
 	public PaneDistribucion(int userLog, Stage stage, Connection con) {
 		// Mientras que va cargando
 		VentanaCargando carga = new VentanaCargando();

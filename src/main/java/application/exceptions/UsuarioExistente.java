@@ -4,6 +4,11 @@ import javafx.scene.control.Alert;
 
 public class UsuarioExistente extends Alert {
 
+	/**
+	 * Alerta de Usuario Existente
+	 * 
+	 * @param alertType tipo alerta
+	 */
 	public UsuarioExistente(AlertType alertType) {
 		super(alertType);
 		this.setTitle("Error usuario existente");

@@ -34,7 +34,7 @@ public class Productos extends ScrollPane {
 	 * Carga todos los productos en un ScrollPane de una
 	 * determinada categoría
 	 * 
-	 * @param userLog   user conectado/no conectado
+	 * @param userLog   id del usuario conectado
 	 * @param categoria la categoria a cargar
 	 */
 	public Productos(int userLog, int categoria, Connection con, Stage stage) {

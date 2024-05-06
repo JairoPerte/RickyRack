@@ -31,6 +31,15 @@ public class VentanaEliminarCuenta extends Stage {
 
 	private int numFallos = 0;
 
+	/**
+	 * Muestra la venta de elimar cuenta que pide confirmar la
+	 * contraseña para luego borrarte la cuenta si es correcta
+	 * la contraseña
+	 * 
+	 * @param con     conexión con la BD
+	 * @param stage   stage de la aplicación principal
+	 * @param userLog id del usuario conectado (a borrar)
+	 */
 	public VentanaEliminarCuenta(Connection con, Stage stage, int userLog) {
 		GridPane gP = new GridPane();
 
@@ -130,6 +139,13 @@ public class VentanaEliminarCuenta extends Stage {
 		this.showAndWait();
 	}
 
+	/**
+	 * Alerta que muestra si el usuario quiere borrar la cuenta
+	 * o por lo contrario se arrepiente
+	 * 
+	 * @param  stage stage de VentanaEliminarCuenta(this)
+	 * @return       true si quiere borrar la cuenta false sino
+	 */
 	private boolean alerta(Stage stage) {
 		try {
 			Alert alerta = new Alert(Alert.AlertType.WARNING);

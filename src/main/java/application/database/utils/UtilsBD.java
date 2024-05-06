@@ -7,6 +7,12 @@ import java.sql.DriverManager;
 
 public class UtilsBD {
 
+	/**
+	 * Conecta a la Base de datos
+	 * 
+	 * @return devuelve la conexión correcta de la base de datos
+	 *         o null si no
+	 */
 	public static Connection conectarBD() {
 
 		try {

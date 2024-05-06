@@ -49,6 +49,13 @@ public class VentanaContacto extends Stage {
 
 	private boolean primeraFoto = false;
 
+	/**
+	 * Ventana que muestra el stage de la vista de hacer un
+	 * reporte
+	 * 
+	 * @param stage stage de la aplicación principal
+	 * @param con   conexión a la base de datos
+	 */
 	public VentanaContacto(Stage stage, Connection con) {
 		GridPane contacto = new GridPane();
 
@@ -129,6 +136,12 @@ public class VentanaContacto extends Stage {
 		this.show();
 	}
 
+	/**
+	 * Muestra el stage de la vista de arrastrar archivo cuando
+	 * se clicka el botón enviar
+	 * 
+	 * @param stage stage de VentanaContacto(this)
+	 */
 	private void adjuntarArchivos(Stage stage) {
 		Stage stackPaneStage = new Stage();
 
@@ -191,6 +204,13 @@ public class VentanaContacto extends Stage {
 		stackPaneStage.showAndWait();
 	}
 
+	/**
+	 * Mostramos la confirmación si el usuario quiere crear el
+	 * reporte o por lo contrario no
+	 * 
+	 * @param stage stage de VentanaContacto(this)
+	 * @param con   conexión a la base de datos
+	 */
 	private void mostrarConfirmacion(Stage stage, Connection con) {
 		Alert infoAlert = new Alert(Alert.AlertType.CONFIRMATION);
 

@@ -17,6 +17,9 @@ import javafx.stage.Stage;
 
 public class VentanaAutores extends Stage {
 
+	/**
+	 * Muestra un Stage que contiene a los autores del proyecto
+	 */
 	public VentanaAutores() {
 		ScrollPane panelScroll = new ScrollPane();
 		panelScroll.setFitToHeight(true);
@@ -73,7 +76,7 @@ public class VentanaAutores extends Stage {
 		} catch (FileNotFoundException e) {
 			new FaltaInterfaz(AlertType.ERROR, this);
 		}
-		Scene escena = new Scene(panelScroll, 600, 200);
+		Scene escena = new Scene(panelScroll, 670, 200);
 		escena.getStylesheets().add(getClass().getResource("/estilos/iniciosesion.css").toExternalForm());
 		this.setTitle("Autores");
 		this.initModality(Modality.WINDOW_MODAL);

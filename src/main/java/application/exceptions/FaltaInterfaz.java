@@ -5,6 +5,12 @@ import javafx.stage.Stage;
 
 public class FaltaInterfaz extends Alert {
 
+	/**
+	 * Alerta de Falta de Interfaz
+	 * 
+	 * @param alertType tipo alerta
+	 * @param stage     stage afectado
+	 */
 	public FaltaInterfaz(AlertType alertType, Stage stage) {
 		super(alertType);
 		this.setTitle("Error falta interfaz");

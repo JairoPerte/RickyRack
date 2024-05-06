@@ -5,6 +5,12 @@ import javafx.stage.Stage;
 
 public class CampoObligatorios extends Alert {
 
+	/**
+	 * Alerta de Campos obligatorio
+	 * 
+	 * @param alertType tipo alerta
+	 * @param stage     stage afectado
+	 */
 	public CampoObligatorios(AlertType alertType, Stage stage) {
 		super(alertType);
 		this.setTitle("Campos Obligatorios");

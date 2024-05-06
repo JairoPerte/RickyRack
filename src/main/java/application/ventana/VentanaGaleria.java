@@ -14,6 +14,13 @@ public class VentanaGaleria extends Stage {
 
 	private int posicion = 0;
 
+	/**
+	 * Ventana que muestra la galería de las imagenes de un
+	 * producto
+	 * 
+	 * @param stage   un stage de VentanaProducto
+	 * @param galeria todos las imagenes subidas del producto
+	 */
 	public VentanaGaleria(Stage stage, ArrayList<Image> galeria) {
 		GridPane imagenes = new GridPane();
 

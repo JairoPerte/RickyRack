@@ -36,6 +36,13 @@ public class VentanaRegistro extends Stage {
 
 	HBox imagenes;
 
+	/**
+	 * Ventana que muestra un formulario para registrarse en la
+	 * aplicación no tiene nada especial
+	 * 
+	 * @param stage stage de la aplicación principal
+	 * @param con   conexión a la base de datos
+	 */
 	public VentanaRegistro(Stage stage, Connection con) {
 		GridPane registro = new GridPane();
 		try {
@@ -252,6 +259,11 @@ public class VentanaRegistro extends Stage {
 		this.showAndWait();
 	}
 
+	/**
+	 * Metodo para borrar el color verde la imagen selecionada
+	 * 
+	 * @param imgSel imagen selectionada
+	 */
 	private void borrarSeleccion(int imgSel) {
 		switch (imgSel) {
 		case 1:

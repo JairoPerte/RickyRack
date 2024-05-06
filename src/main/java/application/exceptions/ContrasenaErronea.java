@@ -5,6 +5,13 @@ import javafx.stage.Stage;
 
 public class ContrasenaErronea extends Alert {
 
+	/**
+	 * Alerta de Contraseña Erronea
+	 * 
+	 * @param alertType   tipo alerta
+	 * @param stage       stage afectado
+	 * @param numIntentos numeros de intentos realizados
+	 */
 	public ContrasenaErronea(AlertType alertType, Stage stage, int numIntentos) {
 		super(alertType);
 		if (numIntentos != 4) {

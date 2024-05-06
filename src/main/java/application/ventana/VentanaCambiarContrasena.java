@@ -24,6 +24,14 @@ public class VentanaCambiarContrasena extends Stage {
 
 	private int numFallos = 0;
 
+	/**
+	 * Muestra un stage para la cambiar contraseña del id
+	 * conectado
+	 * 
+	 * @param con     conexion a la base de datos
+	 * @param stage   stage de la aplicación principal
+	 * @param userLog id del usuario conectado
+	 */
 	public VentanaCambiarContrasena(Connection con, Stage stage, int userLog) {
 		GridPane gP = new GridPane();
 

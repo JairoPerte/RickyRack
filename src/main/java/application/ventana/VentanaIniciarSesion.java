@@ -33,6 +33,14 @@ public class VentanaIniciarSesion extends Stage {
 
 	private int numFallos = 0;
 
+	/**
+	 * Ventana donde se muestra el iniciar de sesión que
+	 * comprueba contraseña y el user correcto y guarda el id si
+	 * es el correcto inicio en userLog de App
+	 * 
+	 * @param stage stage de la aplicación principal
+	 * @param con   conexión a la BD
+	 */
 	public VentanaIniciarSesion(Stage stage, Connection con) {
 		try {
 			GridPane inicioSesion = new GridPane();
