@@ -26,7 +26,8 @@ public class VentanaAcercaDe extends Stage {
 
 		vbox.getChildren().addAll(realizado, libreria, descripcion, antesde);
 
-		Scene escena = new Scene(vbox, 400, 400);
+		Scene escena = new Scene(vbox, 400, 220);
+		this.setTitle("Acerca de RickyRack");
 		this.setScene(escena);
 		this.initModality(Modality.WINDOW_MODAL);
 		this.show();
