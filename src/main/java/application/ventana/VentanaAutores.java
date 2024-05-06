@@ -33,13 +33,12 @@ public class VentanaAutores extends Stage {
 
 		Label reparto = new Label("Reparto");
 		reparto.setStyle("-fx-font-weight: bold;");
-		Label repartoJairo = new Label(
-				"Jairo: Código y diseño de la aplicación, realizar E-R, los inserts Videojuegos");
+		Label repartoJairo = new Label("Jairo: Código y diseño del resto de la aplicación, los inserts Videojuegos");
 		repartoJairo.setWrapText(true);
-		Label repartoRuben = new Label(
-				"Ruben: mayoría del código VentanaContacto.java, realizar E-R, los inserts Peliculas");
+		Label repartoRuben = new Label("Ruben: código VentanaContacto.java, realizar E-R, los inserts Peliculas");
 		repartoRuben.setWrapText(true);
-		Label repartoMonica = new Label("Mónica: Realizar el word, realizar E-R, los inserts Libros");
+		Label repartoMonica = new Label(
+				"Mónica: código VentanaCambiarContrasena.java y VentanaEliminarUsuario.java, Realizar el word, realizar E-R, los inserts Libros");
 		repartoMonica.setWrapText(true);
 
 		Label mencion = new Label("Menciones honorificas");
