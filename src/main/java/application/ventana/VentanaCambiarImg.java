@@ -7,9 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import application.database.model.UsuarioDAO;
+import application.exceptions.FaltaInterfaz;
 import javafx.geometry.HPos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -148,7 +150,7 @@ public class VentanaCambiarImg extends Stage {
 			this.setScene(escena);
 			this.show();
 		} catch (FileNotFoundException e) {
-			// throws FaltaInterfaz
+			new FaltaInterfaz(AlertType.ERROR, this);
 		}
 	}
 

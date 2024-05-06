@@ -5,7 +5,7 @@
 #fecha{
 	-fx-border-color: #000000;
     -fx-border-width: 2px;
-    -fx-text-fill: #00ff00;
+    -fx-text-fill: #006400;
 }
 
 #encabezado{
@@ -37,4 +37,13 @@
 	-fx-font-weight: bold;
 	-fx-border-color: #0000ff;
     -fx-border-width: 3px;
+}
+
+#nivel-user{
+	-fx-text-fill: #00008B;
+	-fx-font-style: italic;
+}
+
+#user{
+	-fx-font-weight: bold;
 }

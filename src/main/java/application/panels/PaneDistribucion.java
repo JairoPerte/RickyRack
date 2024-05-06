@@ -5,11 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import application.App;
+import application.cookies.CookieWriter;
+import application.cookies.Hash;
 import application.database.model.UsuarioDAO;
 import application.ventana.VentanaAcercaDe;
 import application.ventana.VentanaAutores;
 import application.ventana.VentanaAyuda;
-import application.ventana.VentanaCambiarContraseña;
+import application.ventana.VentanaCambiarContrasena;
 import application.ventana.VentanaCambiarImg;
 import application.ventana.VentanaCargando;
 import application.ventana.VentanaContacto;
@@ -102,6 +104,7 @@ public class PaneDistribucion extends BorderPane {
 			} catch (SQLException e) {
 			}
 			MenuItem iCerrar = new MenuItem("Cerrar Sesión...");
+			MenuItem iEliminarSesion = new MenuItem("Eliminar Sesión...");
 			mSesion.getItems().addAll(iCerrar);
 
 			iCerrar.setOnAction(event -> {
@@ -114,12 +117,17 @@ public class PaneDistribucion extends BorderPane {
 				escenaNueva.setRoot(nuevoPaneDistribution);
 			});
 
+			iEliminarSesion.setOnAction(event -> {
+				Hash.quitarHash(con, userLog);
+				CookieWriter.eliminarCookie(userLog);
+			});
+
 			MenuItem iCambiarImg = new MenuItem("Cambiar Imagen");
 			MenuItem iCambiarPassword = new MenuItem("Cambiar Contraseña");
 			MenuItem iEliminar = new MenuItem("Eliminar Cuenta");
 
 			iCambiarPassword.setOnAction(event -> {
-				new VentanaCambiarContraseña(con, stage, userLog);
+				new VentanaCambiarContrasena(con, stage, userLog);
 			});
 
 			iCambiarImg.setOnAction(event -> {

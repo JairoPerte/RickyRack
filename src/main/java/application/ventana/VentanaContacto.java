@@ -18,9 +18,12 @@ import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
 import application.App;
 import application.database.model.UsuarioDAO;
+import application.exceptions.CampoObligatorios;
+import application.exceptions.FaltaInterfaz;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
@@ -117,7 +120,7 @@ public class VentanaContacto extends Stage {
 		try {
 			this.getIcons().add(new Image(new FileInputStream(".\\media\\img\\interfaz\\estrella-relleno.png")));
 		} catch (FileNotFoundException e) {
-			// throws FaltaInterfaz
+			new FaltaInterfaz(AlertType.ERROR, this);
 		}
 		this.setTitle("Formulario de Contacto");
 		this.initOwner(stage);
@@ -139,7 +142,7 @@ public class VentanaContacto extends Stage {
 			botonAdd.setFitWidth(50);
 			stackPane.getChildren().add(botonAdd);
 		} catch (FileNotFoundException e) {
-			// throws FaltaInterfaz
+			new FaltaInterfaz(AlertType.ERROR, this);
 		}
 
 		stackPane.setOnDragOver(event -> {
@@ -307,7 +310,7 @@ public class VentanaContacto extends Stage {
 				}
 				stage.close();
 			} else {
-				// throws CamposObligatorios
+				new CampoObligatorios(null, this);
 			}
 		}
 	}

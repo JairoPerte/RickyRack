@@ -34,6 +34,16 @@ public class Hash {
 		}
 	}
 
+	public static void quitarHash(Connection con, int id) {
+		try {
+			PreparedStatement pstmt = con.prepareStatement("UPDATE usuario SET hash=null WHERE idusuario=?");
+			pstmt.setInt(1, id);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+
+		}
+	}
+
 	public static String generarHash() {
 		String caracteresPermitidos = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 		StringBuilder hash = new StringBuilder();

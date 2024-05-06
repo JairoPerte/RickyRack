@@ -5,10 +5,12 @@ import java.io.FileNotFoundException;
 import java.sql.Connection;
 
 import application.database.utils.UtilsBD;
+import application.exceptions.FaltaInterfaz;
 import application.panels.PaneDistribucion;
 import application.ventana.VentanaInicioSesion;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -39,7 +41,7 @@ public class App extends Application {
 			stage.setScene(scene);
 			stage.show();
 		} catch (FileNotFoundException e) {
-			// THROWS FaltaInterfaz
+			new FaltaInterfaz(AlertType.ERROR, stage);
 		}
 	}
 

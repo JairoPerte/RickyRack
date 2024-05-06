@@ -3,9 +3,11 @@ package application.ventana;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import application.exceptions.FaltaInterfaz;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -69,7 +71,7 @@ public class VentanaAutores extends Stage {
 		try {
 			this.getIcons().add(new Image(new FileInputStream(".\\media\\img\\interfaz\\corazon-like.png")));
 		} catch (FileNotFoundException e) {
-			// throws FaltaInterfaz
+			new FaltaInterfaz(AlertType.ERROR, this);
 		}
 		Scene escena = new Scene(panelScroll, 600, 200);
 		escena.getStylesheets().add(getClass().getResource("/estilos/iniciosesion.css").toExternalForm());

@@ -122,10 +122,7 @@ public class Productos extends ScrollPane {
 			// Para que sea responsiva
 			this.setFitToWidth(true);
 			this.setFitToHeight(true);
-		} catch (
-
-		SQLException e) {
-			// Throws ConexionFallida
+		} catch (SQLException e) {
 		}
 	}
 
@@ -222,7 +219,6 @@ public class Productos extends ScrollPane {
 			});
 			return prodCat;
 		} catch (SQLException e) {
-			// throws ConexionFallida
 			return null;
 		}
 	}
@@ -278,10 +274,8 @@ public class Productos extends ScrollPane {
 
 				// Le ponemos margen
 				GridPane.setMargin(imgEstrella, new Insets(0, 0, 0, 25));
-
-				// Le mandamos un fallo de interfaz(FaltaInterfaz)
 			} catch (FileNotFoundException e) {
-				// throws FaltaInterfaz
+				;
 			}
 
 			cuerpoProd.getChildren().addAll(titulo, mediaCal, sinopsis);
@@ -305,7 +299,6 @@ public class Productos extends ScrollPane {
 
 			return cuerpoProd;
 		} catch (SQLException e) {
-			// throws ConexionFallida
 			return null;
 		}
 	}

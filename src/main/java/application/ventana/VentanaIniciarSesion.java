@@ -9,10 +9,15 @@ import java.sql.SQLException;
 import application.App;
 import application.cookies.Hash;
 import application.database.model.UsuarioDAO;
+import application.exceptions.CampoObligatorios;
+import application.exceptions.ContrasenaErronea;
+import application.exceptions.FaltaInterfaz;
+import application.exceptions.UsuarioNoExiste;
 import application.panels.PaneDistribucion;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -73,7 +78,7 @@ public class VentanaIniciarSesion extends Stage {
 				String nombre = usuario.getText();
 				String password = contrasena.getText();
 				if (usuario.getText().length() == 0 || password.length() == 0) {
-					// throws CampoObligatorios
+					new CampoObligatorios(AlertType.WARNING, this);
 					iniciar.setId("iniciar");
 				} else {
 					try {
@@ -96,11 +101,11 @@ public class VentanaIniciarSesion extends Stage {
 								if (numFallos > 3) {
 									stage.close();
 								}
-								// throws ContrasenaErronea(numFallos)
+								new ContrasenaErronea(AlertType.ERROR, this, numFallos);
 								iniciar.setId("iniciar");
 							}
 						} else {
-							// throws UsuarioNoExistene
+							new UsuarioNoExiste(AlertType.WARNING, this);
 							iniciar.setId("iniciar");
 						}
 					} catch (SQLException e) {
@@ -134,7 +139,7 @@ public class VentanaIniciarSesion extends Stage {
 			// Mostramos
 			this.showAndWait();
 		} catch (FileNotFoundException e) {
-			// throws FaltaInterfaz
+			new FaltaInterfaz(AlertType.ERROR, this);
 		}
 	}
 }

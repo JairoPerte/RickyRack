@@ -5,8 +5,13 @@ import java.io.FileNotFoundException;
 import java.sql.Connection;
 
 import application.database.model.UsuarioDAO;
+import application.exceptions.CampoObligatorios;
+import application.exceptions.ContrasenaErronea;
+import application.exceptions.ContrasenasNoCoincidentes;
+import application.exceptions.FaltaInterfaz;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -15,11 +20,11 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class VentanaCambiarContraseña extends Stage {
+public class VentanaCambiarContrasena extends Stage {
 
 	private int numFallos = 0;
 
-	public VentanaCambiarContraseña(Connection con, Stage stage, int userLog) {
+	public VentanaCambiarContrasena(Connection con, Stage stage, int userLog) {
 		GridPane gP = new GridPane();
 
 		Label lblContrasenaAnt = new Label("Introduzca la contraseña antigua: ");
@@ -41,17 +46,17 @@ public class VentanaCambiarContraseña extends Stage {
 
 					// Si se sigue mostrando es que ha fallado
 					if (this.isShowing()) {
-						// throws ContrasenaIncorrecta
 						numFallos++;
 						if (numFallos > 3) {
 							stage.close();
 						}
+						new ContrasenaErronea(AlertType.ERROR, this, numFallos);
 					}
 				} else {
-					// throws ContrasenasNoCoincidentes
+					new ContrasenasNoCoincidentes(AlertType.WARNING, this);
 				}
 			} else {
-				// throws CamposObligatorios
+				new CampoObligatorios(AlertType.WARNING, this);
 			}
 		});
 
@@ -80,7 +85,7 @@ public class VentanaCambiarContraseña extends Stage {
 		try {
 			this.getIcons().add(new Image(new FileInputStream(".\\media\\img\\interfaz\\candado.png")));
 		} catch (FileNotFoundException e) {
-			// throws FaltaInterfaz
+			new FaltaInterfaz(AlertType.ERROR, this);
 		}
 		this.setScene(new Scene(gP, 400, 200));
 		this.showAndWait();

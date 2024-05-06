@@ -7,10 +7,15 @@ import java.sql.SQLException;
 
 import application.App;
 import application.database.model.UsuarioDAO;
+import application.exceptions.CampoObligatorios;
+import application.exceptions.ContrasenasNoCoincidentes;
+import application.exceptions.FaltaInterfaz;
+import application.exceptions.UsuarioExistente;
 import application.panels.PaneDistribucion;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -163,13 +168,13 @@ public class VentanaRegistro extends Stage {
 								this.close();
 								escenaNueva.setRoot(nuevoPaneDistribution);
 							} else {
-								// throws ContrasenasNoCoincidentes
+								new ContrasenasNoCoincidentes(AlertType.WARNING, this);
 							}
 						} else {
-							// throws CamposObligatorios
+							new CampoObligatorios(AlertType.WARNING, this);
 						}
 					} else {
-						// throws UsuarioExistente
+						new UsuarioExistente(AlertType.WARNING);
 					}
 				} catch (SQLException e) {
 				}
@@ -234,7 +239,7 @@ public class VentanaRegistro extends Stage {
 
 			this.getIcons().add(new Image(new FileInputStream(".\\media\\img\\interfaz\\default-user-icon.png")));
 		} catch (FileNotFoundException e) {
-			// throws FaltaInterfaz
+			new FaltaInterfaz(AlertType.ERROR, this);
 		}
 		Scene escena = new Scene(registro, 340, 250);
 		escena.getStylesheets().add(getClass().getResource("/estilos/registro.css").toExternalForm());

@@ -12,6 +12,7 @@ import application.database.model.UsuarioDAO;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -37,6 +38,11 @@ import javafx.stage.Stage;
 public class VentanaProducto extends Stage {
 
 	private static final int DESCONECTADO = -1;
+
+	private static final int FEMALE_1 = 1;
+	private static final int FEMALE_2 = 2;
+	private static final int MALE_1 = 3;
+	private static final int MALE_2 = 4;
 
 	private int estrellasSel;
 	private static boolean primerComent = false;
@@ -357,19 +363,80 @@ public class VentanaProducto extends Stage {
 
 				// Datos del comentario
 				Label comentarioUsuario = new Label(comentarios.getString("usuario"));
-				gPComentario.add(comentarioUsuario, 0, 0, 1, 2);
-				comentarioUsuario.setMinWidth(50);
+				comentarioUsuario.setWrapText(true);
+				gPComentario.add(comentarioUsuario, 0, 1);
+				comentarioUsuario.setId("user");
+				comentarioUsuario.setMinWidth(80);
+
+				Label comentarioNivel = new Label("Nivel " + comentarios.getInt("nivel"));
+				comentarioNivel.setId("nivel-user");
+				comentarioNivel.setMinWidth(40);
+				gPComentario.add(comentarioNivel, 1, 1);
+
+				// Ponemos la imagen
+				try {
+					switch (comentarios.getInt("imagen")) {
+					case FEMALE_1:
+						ImageView imgF1 = new ImageView(
+								new Image(new FileInputStream(".\\media\\img\\interfaz\\defaultfemale1.png")));
+
+						// Forzamos la imagen
+						imgF1.setFitHeight(50);
+						imgF1.setFitWidth(50);
+
+						// La añadimos
+						gPComentario.add(imgF1, 0, 0, 2, 1);
+						break;
+					case FEMALE_2:
+						ImageView imgF2 = new ImageView(
+								new Image(new FileInputStream(".\\media\\img\\interfaz\\defaultfemale2.png")));
+
+						// Forzamos la imagen
+						imgF2.setFitHeight(50);
+						imgF2.setFitWidth(50);
+
+						// La añadimos
+						gPComentario.add(imgF2, 0, 0, 2, 1);
+						break;
+					case MALE_1:
+						ImageView imgM1 = new ImageView(
+								new Image(new FileInputStream(".\\media\\img\\interfaz\\defaultmale1.png")));
+
+						// Forzamos la imagen
+						imgM1.setFitHeight(50);
+						imgM1.setFitWidth(50);
+
+						// La añadimos
+						gPComentario.add(imgM1, 0, 0, 2, 1);
+						break;
+					case MALE_2:
+						ImageView imgM2;
+						imgM2 = new ImageView(
+								new Image(new FileInputStream(".\\media\\img\\interfaz\\defaultmale2.png")));
+
+						// Forzamos la imagen
+						imgM2.setFitHeight(50);
+						imgM2.setFitWidth(50);
+
+						// La añadimos
+						gPComentario.add(imgM2, 0, 0, 2, 1);
+					}
+				} catch (FileNotFoundException e) {
+					// throws FaltaInterfaz
+				}
+
 				Label comentario = new Label(comentarios.getString("comentario"));
 				comentario.setWrapText(true);
-				gPComentario.add(comentario, 1, 0, 1, 2);
+				gPComentario.add(comentario, 2, 0, 1, 2);
 				GridPane.setMargin(comentario, new Insets(0, 0, 0, 10));
 				Label comentarioLikes = new Label(String.valueOf(comentarios.getInt("likes")) + " likes");
 				comentarioLikes.setTextAlignment(TextAlignment.CENTER);
-				gPComentario.add(comentarioLikes, 2, 1);
+				GridPane.setValignment(comentarioLikes, VPos.TOP);
+				gPComentario.add(comentarioLikes, 3, 1);
 				GridPane.setMargin(comentarioLikes, new Insets(0, 0, 0, 10));
 
 				HBox corazones = new HBox();
-				gPComentario.add(corazones, 2, 0);
+				gPComentario.add(corazones, 3, 0);
 				GridPane.setMargin(corazones, new Insets(0, 0, 0, 10));
 
 				try {
@@ -562,6 +629,9 @@ public class VentanaProducto extends Stage {
 		}
 	}
 
+	/**
+	 * Una alerta que indica que tienes que logearte
+	 */
 	private void necesitasLogearte() {
 		Alert necesitasLogearte = new Alert(AlertType.WARNING);
 		necesitasLogearte.setTitle("No estás logeado");

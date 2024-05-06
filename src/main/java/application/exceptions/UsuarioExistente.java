@@ -1,5 +1,15 @@
 package application.exceptions;
 
-public class UsuarioExistente {
+import javafx.scene.control.Alert;
+
+public class UsuarioExistente extends Alert {
+
+	public UsuarioExistente(AlertType alertType) {
+		super(alertType);
+		this.setTitle("Error usuario existente");
+		this.setHeaderText("El nombre de usuario está escogido ya");
+		this.setContentText("Pruebe a escoger otro nombre");
+		this.show();
+	}
 
 }

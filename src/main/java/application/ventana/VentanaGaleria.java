@@ -45,7 +45,7 @@ public class VentanaGaleria extends Stage {
 		imagenes.add(atras, 0, 1);
 
 		this.setTitle("Galería");
-		Scene escena = new Scene(imagenes, 600, 300);
+		Scene escena = new Scene(imagenes, 550, 300);
 		this.initModality(Modality.WINDOW_MODAL);
 		this.initOwner(stage);
 		this.setScene(escena);

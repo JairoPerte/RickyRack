@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import application.cookies.Hash;
+import application.exceptions.UsuarioExistente;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class UsuarioDAO {
@@ -40,7 +42,7 @@ public class UsuarioDAO {
 
 				return rs.getInt("idusuario");
 			} else {
-				// throws UsuarioExistente
+				new UsuarioExistente(AlertType.ERROR);
 				return USUARIO_EXISTENTE;
 			}
 		} catch (SQLException e) {
@@ -113,11 +115,12 @@ public class UsuarioDAO {
 				pstmt.executeUpdate();
 
 				stage.close();
-				Alert alertaNoImg = new Alert(Alert.AlertType.INFORMATION);
+				Alert alertaCambiada = new Alert(Alert.AlertType.INFORMATION);
 
-				alertaNoImg.setTitle("Contraseña Cambiada");
-				alertaNoImg.setHeaderText("Contraseña Cambiada con éxito");
-				alertaNoImg.show();
+				alertaCambiada.setTitle("Contraseña Cambiada");
+				alertaCambiada.setHeaderText("Contraseña Cambiada con éxito");
+				alertaCambiada.initOwner(stage);
+				alertaCambiada.show();
 			}
 		} catch (SQLException e) {
 		}

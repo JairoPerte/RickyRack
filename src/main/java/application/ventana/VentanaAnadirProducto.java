@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import application.database.model.ProductoDAO;
 import application.database.model.UsuarioDAO;
+import application.exceptions.CampoObligatorios;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -155,7 +156,7 @@ public class VentanaAnadirProducto extends Stage {
 					alert.show();
 				}
 			} else {
-				// throws CampoObligatorios
+				new CampoObligatorios(AlertType.WARNING, this);
 			}
 		});
 

@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import application.App;
 import application.cookies.CookieWriter;
 import application.database.model.UsuarioDAO;
+import application.exceptions.FaltaInterfaz;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -190,7 +192,7 @@ public class VentanaInicioSesion extends Stage {
 			this.showAndWait();
 		} catch (SQLException e) {
 		} catch (FileNotFoundException e) {
-			// throws FaltaInterfaz
+			new FaltaInterfaz(AlertType.ERROR, this);
 		}
 	}
 }

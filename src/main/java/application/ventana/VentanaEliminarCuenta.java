@@ -7,12 +7,17 @@ import java.sql.Connection;
 import application.App;
 import application.cookies.CookieWriter;
 import application.database.model.UsuarioDAO;
+import application.exceptions.CampoObligatorios;
+import application.exceptions.ContrasenaErronea;
+import application.exceptions.ContrasenasNoCoincidentes;
+import application.exceptions.FaltaInterfaz;
 import application.panels.PaneDistribucion;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -44,7 +49,6 @@ public class VentanaEliminarCuenta extends Stage {
 					if (UsuarioDAO.comprobarContrasena(con, userLog, pfContrasena.getText())) {
 
 						if (alerta(this)) {
-
 							UsuarioDAO.eliminarUsuario(con, userLog);
 							CookieWriter.eliminarCookie(userLog);
 							// Desconectado por defecto
@@ -81,13 +85,13 @@ public class VentanaEliminarCuenta extends Stage {
 						if (numFallos > 3) {
 							stage.close();
 						}
-						// throws ContrasenaIncorrecta
+						new ContrasenaErronea(AlertType.ERROR, this, numFallos);
 					}
 				} else {
-					// throws ContrasenasNoCoincidentes
+					new ContrasenasNoCoincidentes(AlertType.WARNING, this);
 				}
 			} else {
-				// throws CamposObligatorios
+				new CampoObligatorios(AlertType.WARNING, this);
 			}
 		});
 
@@ -120,7 +124,7 @@ public class VentanaEliminarCuenta extends Stage {
 		try {
 			this.getIcons().add(new Image(new FileInputStream(".\\media\\img\\interfaz\\cruz-roja.png")));
 		} catch (FileNotFoundException e) {
-			// throws FaltaInterfaz
+			new FaltaInterfaz(AlertType.ERROR, this);
 		}
 		this.setScene(new Scene(gP, 330, 150));
 		this.showAndWait();
