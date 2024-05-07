@@ -159,7 +159,7 @@ public class PaneDistribucion extends BorderPane {
 		MenuItem iAcercaDe = new MenuItem("Acerca de RickyRack");
 		MenuItem iAutores = new MenuItem("Autores");
 		MenuItem iContacto = new MenuItem("Contacta con nosotros");
-		MenuItem iAyuda = new MenuItem("Ayuda");
+		MenuItem iAyuda = new MenuItem("Manual de Ayuda");
 
 		// Eventos
 
