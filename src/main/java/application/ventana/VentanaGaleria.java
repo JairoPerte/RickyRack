@@ -22,6 +22,9 @@ public class VentanaGaleria extends Stage {
 	 * @param galeria todos las imagenes subidas del producto
 	 */
 	public VentanaGaleria(Stage stage, ArrayList<Image> galeria) {
+		if (galeria.isEmpty()) {
+			return;
+		}
 		GridPane imagenes = new GridPane();
 
 		ImageView imgMostrada = new ImageView(galeria.get(posicion));

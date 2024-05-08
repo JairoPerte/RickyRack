@@ -66,20 +66,9 @@ public class VentanaEliminarCuenta extends Stage {
 							// Mostramos la ventan de inicio de sesión de cookies
 							// guardadas (por si quiere iniciar sesión con otra cuenta o
 							// no iniciar sesión)
-							stage.setWidth(1);
-							stage.setHeight(1);
-							stage.setResizable(false);
-							this.setHeight(1);
-							this.setWidth(1);
 							new VentanaInicioSesion(con);
 							this.close();
 							stage.close();
-
-							stage.setWidth(900);
-							stage.setHeight(700);
-							stage.setResizable(true);
-							this.setHeight(150);
-							this.setWidth(330);
 							// Para que cargen de nuevo los cambios
 							Scene escenaNueva = new Scene(new PaneDistribucion(App.userLog, stage, con), 900, 700);
 							escenaNueva.getStylesheets()
